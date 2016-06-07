@@ -65,11 +65,57 @@ class EventsController extends AppController
 		
 		$event = $this->Event->find('first', $options);
 		
+		// イベントの申込履歴を取得
+		$this->loadModel('MembersEvent');
+		
+		$options = array(
+			'conditions' => array(
+				'MembersEvent.member_id' => $this->Session->read('Auth.User.id'),
+				'MembersEvent.event_id'  => $id,
+				'MembersEvent.status'    => 0
+			)
+		);
+		
+		$history = $this->MembersEvent->find('first', $options);
+		
 		if ($this->request->is(array(
 				'post',
 				'put'
 		)))
 		{
+			debug($this->request->data);
+			$data = array(
+				'event_id'    => $id,
+				'member_id'   => $this->Session->read('Auth.User.id'),
+				'status'      => 0,
+			);
+			
+			$this->loadModel('MembersEvent');
+			
+			// イベント申込
+			if($this->request->data['Event']['mode']=='apply')
+			{
+				$this->MembersEvent->create();
+				$this->MembersEvent->save($data);
+				$this->Flash->success(__('イベントを申し込みました'));
+				return $this->redirect(array(
+					'controller' => 'members_events',
+					'action' => 'index'
+				));
+			}
+			
+			// イベント申込キャンセル
+			if($this->request->data['Event']['mode']=='cancel')
+			{
+				$history['MembersEvent']['status'] = 1;
+				$this->MembersEvent->save($history);
+				$this->Flash->success(__('申込をキャンセル致しました'));
+				return $this->redirect(array(
+					'controller' => 'members_events',
+					'action' => 'index'
+				));
+			}
+
 			//debug($this->request->data);
 //			if ($this->Event->save($this->request->data))
 //			{
@@ -84,16 +130,6 @@ class EventsController extends AppController
 //			}
 		}
 		
-		$this->loadModel('MembersEvent');
-		
-		$options = array(
-				'conditions' => array(
-						'MembersEvent.member_id' => $this->Session->read('Auth.User.id'),
-						'MembersEvent.event_id' => $id
-				)
-		);
-		
-		$history = $this->MembersEvent->find('first', $options);
 		
 		$this->set(compact('event', 'history'));
 	}

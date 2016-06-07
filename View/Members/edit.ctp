@@ -1,3 +1,5 @@
+<?php echo $this->Html->css( 'select2.min.css');?>
+<?php echo $this->Html->script( 'select2.min.js');?>
 <?php 
 	if($this->action=='edit')
 	{

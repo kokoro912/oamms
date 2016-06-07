@@ -82,26 +82,24 @@ class MembersEvent extends AppModel
 			),
 	);
 	
-	public function getMemberEvent($user_id)
+	public function getMemberEvent($member_id)
 	{
 		$sql = <<<EOF
  SELECT Event.*, ApplyCount.apply_count
    FROM  ib_events Event
    LEFT OUTER JOIN
-         ib_members_events MembersEvent
-		ON Event.id = MembersEvent.event_id
-   LEFT OUTER JOIN
 		(SELECT event_id, COUNT(*) as apply_count
 		   FROM ib_members_events
+		  WHERE status = 0
+		    AND member_id =:member_id
 		  GROUP BY event_id) ApplyCount
-     ON ApplyCount.event_id   = MembersEvent.event_id
---  WHERE MembersEvent.user_id     =:user_id
-  ORDER BY MembersEvent.event_id
+     ON ApplyCount.event_id   = Event.id
+  ORDER BY Event.id
 EOF;
 		// debug($user_id);
 
 		$params = array(
-				'user_id' => $user_id
+				'member_id' => $member_id
 		);
 
 		$data = $this->query($sql, $params);

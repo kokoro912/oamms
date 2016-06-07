@@ -64,10 +64,12 @@ echo $this->Html->getCrumbs(' / ');
 				<?php
 					if($history)
 					{
+						echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'cancel'));
 						echo $this->Form->submit('申込をキャンセル', Configure::read('form_submit_defaults'));
 					}
 					else
 					{
+						echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'apply'));
 						echo $this->Form->submit('申込', Configure::read('form_submit_defaults'));
 					}
 				?>
