@@ -21,6 +21,7 @@ $config['member_kind']		= array(
 );
 $config['subscription']		= array('0' => '購読しない', '1' => '購読する');
 $config['send_type']		= array('0' => '自宅', '1' => '勤務先');
+$config['apply_status']		= array('0' => '申込', '1' => 'キャンセル');
 
 // フォームのスタイル(BoostCake)の基本設定
 $config['form_defaults'] = array(

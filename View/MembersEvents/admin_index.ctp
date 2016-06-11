@@ -1,16 +1,7 @@
 <?php echo $this->element('admin_menu');?>
 <?php $this->start('css-embedded'); ?>
 <style type='text/css'>
-	#RecordFromDateYear,
-	#RecordToDateYear
-	{
-		width		: 100px;
-	}
-	
-	#RecordFromDateMonth,
-	#RecordToDateMonth,
-	#RecordFromDateDay,
-	#RecordToDateDay
+	.date-select
 	{
 		width		: 80px;
 	}
@@ -31,38 +22,38 @@
 	<div class="ib-page-title"><?php echo __('イベント申込履歴一覧'); ?></div>
 	<div class="ib-horizontal">
 		<?php
-			echo $this->Form->create('Record', array('action' => 'index'));
-			echo $this->Form->input('event_id',	array('label' => 'イベント :', 'options'=>$events, 'selected'=>$event_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
-			echo $this->Form->input('group_id',		array('label' => 'グループ :', 'options'=>$groups, 'selected'=>$group_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
+			echo $this->Form->create('MembersEvent', array('action' => 'index'));
+			echo $this->Form->input('event_id',		array('label' => 'イベント :', 'options'=>$events, 'selected'=>$event_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
+			echo $this->Form->input('status',		array('label' => 'ステータス :', 'options'=>Configure::read('apply_status'), 'selected'=>$status, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
 			echo $this->Form->submit(__('検索'),	array('class' => 'btn btn-info'));
-			echo '<br><div class="ib-search-date-container">';
-			echo $this->Form->input('from_date', array(
-				'type' => 'date',
-				'dateFormat' => 'YMD',
-				'monthNames' => false,
-				'timeFormat' => '24',
-				'minYear' => date('Y') - 5,
-				'maxYear' => date('Y'),
-				'separator' => ' / ',
-				'label'=> '申込日時 : ',
-				'class'=>'form-control',
-				'style' => 'display: inline;',
-				'value' => $from_date
-			));
-			echo $this->Form->input('to_date', array(
-				'type' => 'date',
-				'dateFormat' => 'YMD',
-				'monthNames' => false,
-				'timeFormat' => '24',
-				'minYear' => date('Y') - 5,
-				'maxYear' => date('Y'),
-				'separator' => ' / ',
-				'label'=> '～',
-				'class'=>'form-control',
-				'style' => 'display: inline;',
-				'value' => $to_date
-			));
-			echo '</div>';
+//			echo '<br><div class="ib-search-date-container">';
+//			echo $this->Form->input('from_date', array(
+//				'type' => 'date',
+//				'dateFormat' => 'YMD',
+//				'monthNames' => false,
+//				'timeFormat' => '24',
+//				'minYear' => date('Y') - 5,
+//				'maxYear' => date('Y'),
+//				'separator' => ' / ',
+//				'label'=> '申込日時 : ',
+//				'class' => 'form-control date-select',
+//				'style' => 'display: inline;',
+//				'value' => $from_date
+//			));
+//			echo $this->Form->input('to_date', array(
+//				'type' => 'date',
+//				'dateFormat' => 'YMD',
+//				'monthNames' => false,
+//				'timeFormat' => '24',
+//				'minYear' => date('Y') - 5,
+//				'maxYear' => date('Y'),
+//				'separator' => ' / ',
+//				'label'=> '～',
+//				'class' => 'form-control date-select',
+//				'style' => 'display: inline;',
+//				'value' => $to_date
+//			));
+//			echo '</div>';
 			echo $this->Form->end();
 		?>
 	</div>
@@ -73,6 +64,7 @@
 		<th><?php echo $this->Paginator->sort('started', '開催期間'); ?></th>
 		<th><?php echo $this->Paginator->sort('user_id', '会員名'); ?></th>
 		<th><?php echo $this->Paginator->sort('content_id', '申込日時'); ?></th>
+		<th><?php echo $this->Paginator->sort('status', 'ステータス'); ?></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -82,6 +74,7 @@
 		<td><?php echo h($members_event['Event']['started']); ?> ～ <?php echo h($members_event['Event']['ended']); ?>&nbsp;</td>
 		<td><?php echo h($members_event['Member']['name']); ?>&nbsp;</td>
 		<td><?php echo h($members_event['MembersEvent']['created']); ?>&nbsp;</td>
+		<td><?php echo h(Configure::read('apply_status.'.$members_event['MembersEvent']['status'])); ?>&nbsp;</td>
 	</tr>
 <?php endforeach; ?>
 	</tbody>

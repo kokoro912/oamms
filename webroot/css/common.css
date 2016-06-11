@@ -184,17 +184,6 @@ form .required .control-label:after
 	*/
 }
 
-.ib-search-date-container
-{
-	width				: 800px;
-	height				: 60px;
-}
-
-.ib-search-date-container .date
-{
-	font-size			: 20px;
-}
-
 .well
 {
     background-color: #fafafa;

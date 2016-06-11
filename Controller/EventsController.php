@@ -45,6 +45,8 @@ class EventsController extends AppController
 		);
 
 		$result = $this->paginate();
+		
+		//debug($result);
 
 		//debug($this->paginate);
 		$this->set('events', $result);

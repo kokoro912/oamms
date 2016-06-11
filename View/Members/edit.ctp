@@ -152,7 +152,7 @@
 			<div class="form-group">
 				<div class="col col-md-9 col-md-offset-3">
 					<?php echo $this->Form->submit(($this->action == 'edit') ? __('更新') :  __('入会申込'), Configure::read('form_submit_defaults')); ?>
-					<button class="btn btn-default" onclick="location.href='/ocomms/webroot/website/'">キャンセル</button>
+					<button class="btn btn-default" onclick="location.href='../webroot/website/'">キャンセル</button>
 				</div>
 			</div>
 		</div>

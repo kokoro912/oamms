@@ -84,13 +84,13 @@ class MembersEventsController extends AppController
 		
 		$conditions = $this->MembersEvent->parseCriteria($this->Prg->parsedParams());
 		
-		$group_id		= (isset($this->request->query['group_id'])) ? $this->request->query['group_id'] : "";
+		$status			= (isset($this->request->query['status'])) ? $this->request->query['status'] : "";
 		$event_id		= (isset($this->request->query['event_id'])) ? $this->request->query['event_id'] : "";
 		$member_id		= (isset($this->request->query['member_id'])) ? $this->request->query['member_id'] : "";
 		$contenttitle	= (isset($this->request->query['contenttitle'])) ? $this->request->query['contenttitle'] : "";
 		
-		if($group_id != "")
-			$conditions['Member.id'] = $this->Group->getMemberIdByGroupID($group_id);
+		if($status != "")
+			$conditions['MembersEvent.status'] = $status;
 		
 		if($event_id != "")
 			$conditions['Event.id'] = $event_id;
@@ -130,12 +130,12 @@ class MembersEventsController extends AppController
 		//$groups = $this->Group->getGroupList();
 		$this->set('members_events',	$this->Paginator->paginate());
 		
-		$this->Group = new Group();
+//		$this->Group = new Group();
 		$this->Event = new Event();
 		
-		$this->set('groups',			$this->Group->find('list'));
+//		$this->set('groups',			$this->Group->find('list'));
 		$this->set('events', 			$this->Event->find('list'));
-		$this->set('group_id',			$group_id);
+		$this->set('status',			$status);
 		$this->set('event_id',			$event_id);
 		$this->set('member_id',			$member_id);
 		$this->set('contenttitle',		$contenttitle);
