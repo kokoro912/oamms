@@ -124,7 +124,7 @@ class UsersController extends AppController
 			$data = array(
 				'event_id' => $this->Session->read('Iroha.event_id'),
 				'username' => 'root',
-				'password' => 'irohaboard',
+				'password' => 'oamms',
 				'name' => 'root',
 				'role' => 'admin',
 				'email' => 'info@example.com'
