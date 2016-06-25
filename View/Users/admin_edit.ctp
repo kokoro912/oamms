@@ -3,8 +3,7 @@
 <?php echo $this->Html->script( 'select2.min.js');?>
 <?php $this->Html->scriptStart(array('inline' => false)); ?>
 	$(function (e) {
-		$('#GroupGroup').select2({placeholder:   "所属するグループを選択して下さい。(複数選択可)",});
-		$('#EventEvent').select2({placeholder: "受講するコースを選択して下さい。(複数選択可)",});
+		$('#UserGroup').select2({placeholder:   "所属するグループを選択して下さい。(複数選択可)",});
 		// パスワードの自動復元を防止
 		setTimeout('$("#UserNewPassword").val("");',100);
 	});
@@ -22,21 +21,10 @@
 				echo $this->Form->input('username',				array('label' => 'ログインID'));
 				echo $this->Form->input('User.new_password',	array('label' => 'パスワード', 'type' => 'password', 'autocomplete' => 'off'));
 				echo $this->Form->input('name',					array('label' => '氏名'));
-				echo $this->Form->input('role',	array(
-					'type' => 'radio',
-					'before' => '<label class="col col-md-3 col-sm-4 control-label">権限</label>',
-					'separator'=>"　", 
-					'disabled'=>false, 
-					'legend' => false,
-					'class' => false,
-					'options' => Configure::read('user_role')
-					)
-				);
 				
 				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
 				echo $this->Form->input('comment',				array('label' => '備考'));
 				echo $this->Form->input('Group',				array('label' => '所属グループ',	'size' => 20));
-				echo $this->Form->input('Event',				array('label' => '受講コース',		'size' => 20));
 			?>
 			<div class="form-group">
 				<div class="col col-md-9 col-md-offset-3">

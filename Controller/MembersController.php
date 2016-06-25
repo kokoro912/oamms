@@ -116,29 +116,6 @@ class MembersController extends AppController
 			}
 		}
 
-//		$options = array(
-//			'conditions' => array(
-//					'Member.username' => 'root'
-//			)
-//		);
-//
-//		$data = $this->Member->find('first', $options);
-//
-//		if(!$data)
-//		{
-//			// 管理者アカウントが存在しない場合、管理者アカウントを作成
-//			$data = array(
-//				'event_id' => $this->Session->read('Iroha.event_id'),
-//				'username' => 'root',
-//				'password' => 'irohaboard',
-//				'name' => 'root',
-//				'role' => 'admin',
-//				'email' => 'info@example.com'
-//			);
-//
-//			$this->Member->save($data);
-//		}
-
 		if ($this->request->is('post'))
 		{
 			//debug($this->request);
