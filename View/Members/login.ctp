@@ -9,9 +9,10 @@
 <div class="users form">
 	<div class="panel panel-default form-signin">
 		<div class="panel-heading">
-			会員ログイン
+			<?php echo __("会員ログイン"); ?>
 		</div>
 		<div class="panel-body">
+			<div class="text-right"><a href="../admin/users/login"><?php echo __("管理者ログインへ"); ?></a></div>
 			<?php echo $this->Flash->render('auth'); ?>
 			<?php echo $this->Form->create('Member'); ?>
 			

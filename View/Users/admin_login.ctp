@@ -1,9 +1,10 @@
 <div class="users form">
-	<div class="panel panel-default form-signin">
+	<div class="panel panel-danger form-signin">
 		<div class="panel-heading">
 			管理者ログイン
 		</div>
 		<div class="panel-body">
+			<div class="text-right"><a href="../../members/login"><?php echo __("会員ログインへ"); ?></a></div>
 			<?php echo $this->Flash->render('auth'); ?>
 			<?php echo $this->Form->create('User'); ?>
 			
