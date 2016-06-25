@@ -62,15 +62,26 @@ echo $this->Html->getCrumbs(' / ');
 				echo $this->Form->hidden('id', array('id'=>'', 'class'=>'event_id', 'value'=>$event['Event']['id']));
 				?>
 				<?php
-					if($history)
+					$today	= strtotime(date('Y-m-d'));
+					$opened	= strtotime($event['Event']['opened']);
+					$closed	= strtotime($event['Event']['closed']);
+					
+					// 申込期間内の場合
+					if(
+						($today >= $opened)&&
+						($today <= $closed)
+					)
 					{
-						echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'cancel'));
-						echo $this->Form->submit('申込をキャンセル', Configure::read('form_submit_defaults'));
-					}
-					else
-					{
-						echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'apply'));
-						echo $this->Form->submit('申込', Configure::read('form_submit_defaults'));
+						if($history)
+						{
+							echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'cancel'));
+							echo $this->Form->submit('申込をキャンセル', Configure::read('form_submit_defaults'));
+						}
+						else
+						{
+							echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'apply'));
+							echo $this->Form->submit('申込', Configure::read('form_submit_defaults'));
+						}
 					}
 				?>
 			</div>

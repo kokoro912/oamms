@@ -31,11 +31,21 @@
 				<?php
 				if($event['ApplyCount']['apply_count'] > 0)
 				{
-					echo '<button type="button" class="btn btn-info btn-rest">申込中</button>';
+					echo '<button type="button" class="btn btn-info btn-rest">申込済</button>';
 				}
 				else
 				{
-					echo '<button type="button" class="btn btn-danger btn-rest">申込受付中</button>';
+					$today	= strtotime(date('Y-m-d'));
+					$closed	= strtotime($event['Event']['closed']);
+					
+					if($today > $closed)
+					{
+						echo '<button type="button" class="btn btn-default btn-rest">受付終了</button>';
+					}
+					else
+					{
+						echo '<button type="button" class="btn btn-danger btn-rest">申込受付中</button>';
+					}
 				}
 				?>
 				<h4 class="list-group-item-heading"><?php echo h($event['Event']['title']);?></h4>
