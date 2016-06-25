@@ -20,6 +20,13 @@ http://demo-oamms.irohasoft.com/admin/
 #Installation
 
 #Features
+* Association member management.
+* Member Group management.
+* System's user management.
+* Event management.
+* Information management.
+* My page.
+* Application for admission.
 
 #License
 GPLv3
