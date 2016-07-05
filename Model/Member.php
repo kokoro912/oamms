@@ -48,7 +48,77 @@ class Member extends AppModel
 				)
 			)
 		),
-		'role' => array(
+		'kana' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'gender' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'birthday' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'nation_id' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'zip' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'prefecture' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'address1' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'tel_no' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'email' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'send_type' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'subscription' => array(
 			'notBlank' => array(
 				'rule' => array(
 						'notBlank'
