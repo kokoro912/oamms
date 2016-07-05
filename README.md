@@ -1,6 +1,4 @@
-# OAMMS
-Open Association Member Management System
-
+# Open Association Member Management System (OAMMS)
 OAMMS is a simple and oepn source member management system for associations such as academic societies.
 
 #Project website
