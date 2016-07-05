@@ -91,6 +91,7 @@
 				echo $this->Form->input('address2',				array('label' => '住所2'));
 				echo $this->Form->input('tel_no',				array('label' => '電話番号'));
 				echo $this->Form->input('fax_no',				array('label' => 'FAX番号'));
+				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
 				
 				echo getBlockTag('最終学歴');
 				echo $this->Form->input('school',				array('label' => '学校名'));
@@ -109,8 +110,6 @@
 					'class'=>'form-control date',
 					'style' => 'display: inline;',
 				));
-				
-				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
 
 				echo getBlockTag('紹介者情報');
 				echo $this->Form->input('intro_username',		array('label' => '会員番号'));

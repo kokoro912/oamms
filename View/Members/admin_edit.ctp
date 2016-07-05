@@ -85,6 +85,7 @@
 				echo $this->Form->input('address2',				array('label' => '住所2'));
 				echo $this->Form->input('tel_no',				array('label' => '電話番号'));
 				echo $this->Form->input('fax_no',				array('label' => 'FAX番号'));
+				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
 				
 				echo getBlockTag('最終学歴');
 				echo $this->Form->input('school',				array('label' => '学校名'));
@@ -104,7 +105,6 @@
 					'style' => 'display: inline;',
 				));
 				
-				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
 				echo $this->Form->input('comment',				array('label' => '備考'));
 
 				echo getBlockTag('紹介者情報');
@@ -154,7 +154,7 @@
 					'options' => Configure::read('member_status')
 					)
 				);
-				
+
 				echo $this->Form->input('Group',				array('label' => '所属グループ',	'size' => 20));
 				
 				function getBlockTag($title)
