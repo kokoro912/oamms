@@ -8,7 +8,7 @@
           <span class="icon-bar"></span>
         </button>
         <!--
-        <a class="navbar-brand" href="#">OCoMMS</a>
+        <a class="navbar-brand" href="#">OAMMS</a>
         -->
       </div>
       <div class="navbar-collapse collapse">

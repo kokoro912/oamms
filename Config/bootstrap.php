@@ -97,5 +97,5 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-// OCoMMS Р▌ТшГtГ@ГCГЛВЁГНБ[Гh
+// OAMMS шинхоЪуГХуВбуВдуГлуВТуГнуГ╝уГЙ
 Configure::load("ib_config");

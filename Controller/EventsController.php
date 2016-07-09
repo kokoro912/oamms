@@ -1,6 +1,6 @@
 <?php
 /**
- * OCoMMS Project
+ * OAMMS Project
  *
  * @author        Kotaro Miura
  * @copyright     2016 Advanced Institute of Industrial Technology
@@ -10,6 +10,15 @@
 
 App::uses('AppController', 'Controller');
 
+/**
+ * Event コントローラ
+ *
+ * @property Group $Group
+ * @property Content $Content
+ * @property ContentsQuestion $ContentsQuestion
+ * @property EventsMember $EventsMember
+ * @property User $User
+ */
 class EventsController extends AppController
 {
 

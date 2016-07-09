@@ -1,6 +1,6 @@
 <?php
 /**
- * OCoMMS Project
+ * OAMMS Project
  *
  * @author        Kotaro Miura
  * @copyright     2016 Advanced Institute of Industrial Technology
@@ -10,7 +10,7 @@
 
 if (version_compare(PHP_VERSION, '5.3.0') <= 0)
 {
-	echo "ERROR-001 : OCoMMS の動作には 5.3.0 以上が必要です。現在のバージョンは " . PHP_VERSION . " です。\n";
+	echo "ERROR-001 : OAMMS の動作には 5.3.0 以上が必要です。現在のバージョンは " . PHP_VERSION . " です。\n";
 	exit;
 }
 

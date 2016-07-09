@@ -1,5 +1,5 @@
 /**
- * OCoMMS Project
+ * OAMMS Project
  *
  * @author        Kotaro Miura
  * @copyright     2016 Advanced Institute of Industrial Technology
