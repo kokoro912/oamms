@@ -16,7 +16,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'ocomms',
+		'database' => 'oamms',
 		'prefix' => 'ib_',
 		'encoding' => 'utf8'
 	);
