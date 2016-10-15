@@ -19,7 +19,7 @@
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('username',				array('label' => 'ログインID'));
-				echo $this->Form->input('User.new_password',	array('label' => 'パスワード', 'type' => 'password', 'autocomplete' => 'off'));
+				echo $this->Form->input('Member.new_password',	array('label' => 'パスワード', 'type' => 'password', 'autocomplete' => 'off'));
 				echo $this->Form->input('name',					array('label' => '氏名'));
 				
 				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
