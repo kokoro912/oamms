@@ -169,36 +169,39 @@ class MembersController extends AppController
 		{
 			if ($this->Member->save($this->request->data))
 			{
-				$name	= $this->request->data['Member']['name'];
-				$mail	= $this->request->data['Member']['email'];
-				$admin_from	= Configure :: read('admin_from');
-				$admin_to	= Configure :: read('admin_to');
-				
-				$params = array(
-					'name' => $name,
-				);
-				
-				// 申込者へメール送信
-				$email = new CakeEmail();
-				$email->from($admin_from);
-				$email->to($mail);
-				$email->subject('[OAMMS]入会申込受付メール');
-				$email->template('apply');
-				$email->viewVars($params);
-				$email->send();
-				
-				// 管理者へメール送信
-				$email = new CakeEmail();
-				$email->from($admin_from);
-				$email->to($admin_to);
-				$email->subject('[OAMMS]入会申込通知メール');
-				$email->template('admin_apply');
-				$email->viewVars($params);
-				$email->send();
-				
-				return $this->redirect(array(
-					'action' => 'thanks'
-				));
+				if($this->action == 'add')
+				{
+					$name	= $this->request->data['Member']['name'];
+					$mail	= $this->request->data['Member']['email'];
+					$admin_from	= Configure :: read('admin_from');
+					$admin_to	= Configure :: read('admin_to');
+					
+					$params = array(
+						'name' => $name,
+					);
+					
+					// 申込者へメール送信
+					$email = new CakeEmail();
+					$email->from($admin_from);
+					$email->to($mail);
+					$email->subject('[OAMMS]入会申込受付メール');
+					$email->template('apply');
+					$email->viewVars($params);
+					$email->send();
+					
+					// 管理者へメール送信
+					$email = new CakeEmail();
+					$email->from($admin_from);
+					$email->to($admin_to);
+					$email->subject('[OAMMS]入会申込通知メール');
+					$email->template('admin_apply');
+					$email->viewVars($params);
+					$email->send();
+					
+					return $this->redirect(array(
+						'action' => 'thanks'
+					));
+				}
 			}
 			else
 			{
