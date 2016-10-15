@@ -9,6 +9,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 App::import('Vendor', 'Utils');
 
 /**
@@ -87,7 +88,7 @@ class AppController extends Controller
 					'admin' => true
 			);
 			$this->Auth->loginRedirect = array(
-					'controller' => 'users',
+					'controller' => 'members',
 					'action' => 'index',
 					'admin' => true
 			);
