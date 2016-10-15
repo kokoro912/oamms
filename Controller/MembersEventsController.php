@@ -98,28 +98,6 @@ class MembersEventsController extends AppController
 		if($member_id != "")
 			$conditions['Member.id'] = $member_id;
 		
-		$from_date	= (isset($this->request->query['from_date'])) ? 
-			$this->request->query['from_date'] : 
-				array(
-					'year' => date('Y', strtotime("-1 month")),
-					'month' => date('m', strtotime("-1 month")), 
-					'day' => date('d', strtotime("-1 month"))
-				);
-		
-		// debug($from_date);
-		
-		$to_date	= (isset($this->request->query['to_date'])) ? 
-			$this->request->query['to_date'] : 
-				array('year' => date('Y'), 'month' => date('m'), 'day' => date('d'));
-		
-		// debug($to_date);
-		
-		// 学習日付による絞り込み
-		$conditions['MembersEvent.created BETWEEN ? AND ?'] = array(
-			implode("/", $from_date), 
-			implode("/", $to_date).' 23:59:59'
-		);
-		
 		if($contenttitle != "")
 			$conditions['Content.title like'] = '%'.$contenttitle.'%';
 		
@@ -139,7 +117,5 @@ class MembersEventsController extends AppController
 		$this->set('event_id',			$event_id);
 		$this->set('member_id',			$member_id);
 		$this->set('contenttitle',		$contenttitle);
-		$this->set('from_date',			$from_date);
-		$this->set('to_date',			$to_date);
 	}
 }
