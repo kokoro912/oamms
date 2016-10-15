@@ -1,26 +1,26 @@
-<?php echo $name; ?> �l
+<?php echo $name; ?> 様
 
-���̓x�͏��F�����������������܂����B
+この度は承認処理が完了いたしました。
 
-�ȉ��̉���ԍ��ƃA�J�E���g�ŉ���y�[�W�Ƀ��O�C���\�ł��B
+以下の会員番号とアカウントで会員ページにログイン可能です。
 
 
-����ԍ�   : <?php echo $username; ?>
+会員番号   : <?php echo $username; ?>
 
-�p�X���[�h : <?php echo $password; ?>
+パスワード : <?php echo $password; ?>
 
-����y�[�W��URL
+会員ページのURL
 http://tsukuba.at-iroha.jp/members/
 
-���̃��[���͑��M��p�̃A�h���X���瑗�M���Ă���܂��B
-�ԐM����ƃG���[�ɂȂ�܂��̂ŁA���₢�������͉��L��
-�A�h���X�ւ��肢�������܂��B
+このメールは送信専用のアドレスから送信しております。
+返信するとエラーになりますので、お問い合せ等は下記の
+アドレスへお願いいたします。
 xxx@dummy.com
 
 
 -----------------------------------------------------
-��ʎВc�@�lXXX�w��
-�����s���c��_�cX-X-X
+一般社団法人XXX学会
+東京都千代田区神田X-X-X
 xxx@dummy.com
-Tel.03-1234-1234�@Fax.03-1234-1234
+Tel.03-1234-1234　Fax.03-1234-1234
 -----------------------------------------------------
