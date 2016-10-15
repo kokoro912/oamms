@@ -26,7 +26,7 @@
 	$(function (e) {
 		$('#GroupGroup').select2({placeholder:   "所属するグループを選択して下さい。(複数選択可)",});
 		// パスワードの自動復元を防止
-		setTimeout('$("#StudentNewPassword").val("");',100);
+		setTimeout('$("#MemberNewPassword").val("");',100);
 	});
 <?php $this->Html->scriptEnd(); ?>
 <div class="users form">
@@ -40,6 +40,7 @@
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('username',				array('label' => '会員番号'));
+				echo $this->Form->input('new_password',			array('label' => 'パスワード', 'type' => 'password', 'autocomplete' => 'off'));
 				echo $this->Form->input('name',					array('label' => '氏名'));
 				echo $this->Form->input('kana',					array('label' => 'カナ'));
 				echo $this->Form->input('nation_id',			array('label' => '国籍'));
@@ -147,6 +148,7 @@
 				echo $this->Form->input('status',	array(
 					'type' => 'radio',
 					'before' => '<label class="col col-md-3 col-sm-4 control-label">ステータス</label>',
+					'after' => '<font color="red">'.__('※ 承認に変更すると会員に承認完了メールが送信されます').'</font>',
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -156,6 +158,10 @@
 				);
 
 				echo $this->Form->input('Group',				array('label' => '所属グループ',	'size' => 20));
+				
+				// 承認モード判定用
+				if($this->request->data['Member']['status']=='0')
+					echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'is_apply'));
 				
 				function getBlockTag($title)
 				{

@@ -12,7 +12,7 @@
 $config['group_status']		= array('1' => '公開', '0' => '非公開');
 $config['course_status']	= array('1' => '有効', '0' => '無効');
 $config['gender']			= array('M' => '男性', 'W' => '女性');
-$config['member_status']	= array('0' => '未承認', '1' => '承認', '2' => '却下');
+$config['member_status']	= array('0' => '申込中', '1' => '承認', '2' => '保留', '3' => '却下');
 $config['member_kind']		= array(
 	'1'		=> '正会員',
 	'2'		=> '準会員',
@@ -22,6 +22,12 @@ $config['member_kind']		= array(
 $config['subscription']		= array('0' => '購読しない', '1' => '購読する');
 $config['send_type']		= array('0' => '自宅', '1' => '勤務先');
 $config['apply_status']		= array('0' => '申込', '1' => 'キャンセル');
+
+$config['admin_from']		= array('info@irohasoft.jp' => 'OAMMS');
+$config['admin_to']			= array('miura@irohasoft.jp');
+
+$config['website_url']		= 'tsukuba.at-iroha.jp';
+
 
 // フォームのスタイル(BoostCake)の基本設定
 $config['form_defaults'] = array(

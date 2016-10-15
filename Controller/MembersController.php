@@ -29,7 +29,9 @@ class MembersController extends AppController
 					'allowedActions' => array(
 							'index',
 							'login',
-							'add'
+							'add',
+							'thanks',
+							'mail'
 					)
 			)
 	);
@@ -165,16 +167,37 @@ class MembersController extends AppController
 				'put'
 		)))
 		{
-			debug($this->request->data);
-
 			if ($this->Member->save($this->request->data))
 			{
-				$this->Flash->success(__('ユーザ情報が保存されました'));
-
-				unset($this->request->data['Member']['new_password']);
-
+				$name	= $this->request->data['Member']['name'];
+				$mail	= $this->request->data['Member']['email'];
+				$admin_from	= Configure :: read('admin_from');
+				$admin_to	= Configure :: read('admin_to');
+				
+				$params = array(
+					'name' => $name,
+				);
+				
+				// 申込者へメール送信
+				$email = new CakeEmail();
+				$email->from($admin_from);
+				$email->to($mail);
+				$email->subject('[OAMMS]入会申込受付メール');
+				$email->template('apply');
+				$email->viewVars($params);
+				$email->send();
+				
+				// 管理者へメール送信
+				$email = new CakeEmail();
+				$email->from($admin_from);
+				$email->to($admin_to);
+				$email->subject('[OAMMS]入会申込通知メール');
+				$email->template('admin_apply');
+				$email->viewVars($params);
+				$email->send();
+				
 				return $this->redirect(array(
-						'action' => 'index'
+					'action' => 'thanks'
 				));
 			}
 			else
@@ -192,13 +215,16 @@ class MembersController extends AppController
 			$this->request->data = $this->Member->find('first', $options);
 		}
 
-		$this->Group  = new Group();
-		//debug($this->Group);
+		$this->loadModel('Group');
 		$this->loadModel('Nation');
 
 		$groups  = $this->Group->find('list');
 		$nations = $this->Nation->find('list');
 		$this->set(compact('groups', 'nations'));
+	}
+
+	public function thanks()
+	{
 	}
 
 	public function admin_add()
@@ -226,8 +252,6 @@ class MembersController extends AppController
 		$name		= (isset($this->request->query['name']))     ? $this->request->query['name'] : "";
 
 		$conditions = array();
-//		if($group_id != "")
-//			$conditions['Member.id'] = $this->Group->getMemberIdByGroupID($group_id);
 
 		if($username != "")
 			$conditions['Member.username like'] = '%'.$username.'%';
@@ -235,53 +259,13 @@ class MembersController extends AppController
 		if($name != "")
 			$conditions['Member.name like'] = '%'.$name.'%';
 
-//		$this->paginate = array(
-//			'Member' => array(
-//				'fields' => array('*', 'MemberGroup.group_count', 'MemberEvent.event_count'),
-//				'conditions' => $conditions,
-//				'limit' => 10,
-//				'order' => 'created desc',
-//				'joins' => array(
-//					array('type' => 'LEFT OUTER', 'alias' => 'MemberGroup',
-//							'table' => '(SELECT user_id, COUNT(*) as group_count FROM we_users_groups GROUP BY user_id)',
-//							'conditions' => 'Member.id = MemberGroup.user_id'),
-//					array('type' => 'LEFT OUTER', 'alias' => 'MemberEvent',
-//							'table' => '(SELECT user_id, COUNT(*) as event_count FROM we_users_events GROUP BY user_id)',
-//							'conditions' => 'Member.id = MemberEvent.user_id')
-//				))
-//		);
-
-
-
-// 		if (isset($this->request->named['sort']) && $this->request->named['sort'] == 'MemberGroup.group_count')
-// 		{
-// 			debug(array('MemberGroup.group_count' => $this->request->named['dir']));
-
-// 			$this->paginate['order'] = 'MemberGroup.group_count';
-// 		}
-
 		$result = $this->paginate();
-
-		// 独自カラムの場合、自動でソートされないため、個別の実装が必要
-//		if (isset($this->request->named['sort']) && $this->request->named['sort'] == 'MemberGroup.group_count')
-//		{
-//			$result = Set::sort($result, '/MemberGroup/group_count', $this->request->named['direction']);
-//		}
-//
-//		if (isset($this->request->named['sort']) && $this->request->named['sort'] == 'MemberEvent.event_count')
-//		{
-//			$result = Set::sort($result, '/MemberEvent/event_count', $this->request->named['direction']);
-//		}
-
-		//debug($result);
 
 		$this->Group = new Group();
 		$this->set('groups',   $this->Group->find('list'));
 		$this->set('members', $result);
 		$this->set('group_id', $group_id);
 		$this->set('name',     $name);
-
-		//debug($this->Paginator->paginate());
 	}
 
 	public function admin_welcome()
@@ -299,16 +283,66 @@ class MembersController extends AppController
 				'put'
 		)))
 		{
-			debug($this->request->data);
+			// 承認モード
+			$is_approval_mode = false;
+			
+			if(
+				($this->request->data['Member']['mode']=='is_apply')&&
+				($this->request->data['Member']['status']=='1')
+			)
+			{
+				$is_approval_mode = true;
+			}
+
+
+			if($is_approval_mode)
+			{
+				$this->request->data['Member']['password'] = substr(str_shuffle('1234567890abcdefghijklmnopqrstuvwxyz'), 0, 6);
+			}
+			else
+			{
+				if ($this->request->data['Member']['new_password'] !== '')
+					$this->request->data['Member']['password'] = $this->request->data['Member']['new_password'];
+			}
 
 			if ($this->Member->save($this->request->data))
 			{
-				$this->Flash->success(__('ユーザ情報が保存されました'));
+				$this->Flash->success(__('会員情報が保存されました'));
 
 				unset($this->request->data['Member']['new_password']);
+				
+				
+				//debug($this->request->data['Member']['mode']);
+				
+				// 旧ステータスが申込中で、新しいステータスが承認の場合、承認完了メールを送信する
+				if(
+					($this->request->data['Member']['mode']=='is_apply')&&
+					($this->request->data['Member']['status']=='1')
+				)
+				{
+					$name		= $this->request->data['Member']['name'];
+					$to			= $this->request->data['Member']['email'];
+					$admin_from	= Configure :: read('admin_from');
+					
+					$params = array(
+						'name'		=> $name,
+						'username'	=> $this->request->data['Member']['username'],
+						'password'	=> $this->request->data['Member']['password'],
+					);
+					
+					// 申込者宛
+					$email = new CakeEmail();
+					$email->from($admin_from);
+					$email->to($to);
+					$email->subject('[OAMMS]承認完了メール');
+					$email->template('approval');
+					$email->viewVars($params);
+					$email->send();
+					$this->Flash->success(__('会員に承認完了メールが送信されました'));
+				}
 
 				return $this->redirect(array(
-						'action' => 'index'
+					'action' => 'index'
 				));
 			}
 			else
@@ -324,6 +358,8 @@ class MembersController extends AppController
 					)
 			);
 			$this->request->data = $this->Member->find('first', $options);
+			
+			//debug($this->request->data);
 		}
 
 		$this->Group  = new Group();
@@ -388,5 +424,40 @@ class MembersController extends AppController
 	public function admin_logout()
 	{
 		$this->logout();
+	}
+	
+	public function mail()
+	{
+		$this->autoRender = FALSE;
+		
+		$name	= '山田太郎';
+		$mail	= 'miura@irohasoft.jp';
+		$admin_from	= Configure :: read('admin_mail.from');
+		$admin_to	= Configure :: read('admin_mail.to');
+		
+		debug($admin_to);
+		debug($admin_from);
+		
+		$params = array(
+			'name' => $name,
+		);
+		
+		// 申込者宛
+		$email = new CakeEmail();
+		$email->from($admin_from);
+		$email->to($mail);
+		$email->subject('[OAMMS]入会申込受付メール');
+		$email->template('apply');
+		$email->viewVars($params);
+		$email->send();
+		
+		// 管理者宛
+		$email = new CakeEmail();
+		$email->from($admin_from);
+		$email->to($admin_to);
+		$email->subject('[OAMMS]入会申込通知メール');
+		$email->template('admin_apply');
+		$email->viewVars($params);
+		$email->send();
 	}
 }
