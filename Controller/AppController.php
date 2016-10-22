@@ -30,7 +30,7 @@ class AppController extends Controller
 			'Flash',
 			'Auth' => array(
 					'loginRedirect' => array(
-							'controller' => 'members_events',
+							'controller' => 'infos',
 							'action' => 'index'
 					),
 					'logoutRedirect' => array(
@@ -72,7 +72,7 @@ class AppController extends Controller
 			($this->request->params['controller']=='admin')
 		)
 		{
-			// roleがadminもしくは manager以外の場合、強制ログアウトする
+			// roleがadmin以外の場合、強制ログアウトする
 			if($this->Auth->user())
 			{
 				if($this->Auth->user('role')!='admin')
@@ -133,6 +133,16 @@ class AppController extends Controller
 			
 			$this->set('loginURL', "/members/login/");
 			$this->set('logoutURL', "/members/logout/");
+			
+			if($this->Auth->user())
+			{
+				// roleがadminの場合、強制ログアウトする
+				if($this->Auth->user('role')=='admin')
+				{
+					$this->redirect($this->Auth->logout());
+					return;
+				}
+			}
 			// $this->layout = 'login'; //レイアウトを切り替える。
 			// AuthComponent::$sessionKey = "Auth.User";
 		}
