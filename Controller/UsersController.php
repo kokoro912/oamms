@@ -43,7 +43,7 @@ class UsersController extends AppController
 
 	public function index()
 	{
-		$this->redirect("/members_events");
+		$this->redirect("/infos");
 	}
 
 	public function view($id = null)
