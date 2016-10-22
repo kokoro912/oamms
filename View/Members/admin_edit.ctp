@@ -40,7 +40,17 @@
 			<?php
 				echo $this->Form->input('id');
 				echo $this->Form->input('username',				array('label' => '会員番号'));
-				echo $this->Form->input('new_password',			array('label' => 'パスワード', 'type' => 'password', 'autocomplete' => 'off'));
+				
+				// 申込中の場合、パスワードを自動発行する為、パスワードフィールドを表示しない
+				if($this->request->data['Member']['status']=='0')
+				{
+					echo $this->Form->hidden('new_password', array('id'=>'new_password', 'value'=>''));
+				}
+				else
+				{
+					echo $this->Form->input('new_password',			array('label' => 'パスワード', 'type' => 'password', 'autocomplete' => 'off'));
+				}
+				
 				echo $this->Form->input('name',					array('label' => '氏名'));
 				echo $this->Form->input('kana',					array('label' => 'カナ'));
 				echo $this->Form->input('nation_id',			array('label' => '国籍'));
@@ -145,10 +155,20 @@
 					)
 				);
 
+				$after_msg = "";
+				
+				// 承認モード判定用
+				if($this->request->data['Member']['status']!='1')
+				{
+					echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'is_apply'));
+					$after_msg = '<font color="red">'.__('※ 承認に変更すると会員に承認完了メールが送信されます').'</font>';
+				}
+				
+				
 				echo $this->Form->input('status',	array(
 					'type' => 'radio',
 					'before' => '<label class="col col-md-3 col-sm-4 control-label">ステータス</label>',
-					'after' => '<font color="red">'.__('※ 承認に変更すると会員に承認完了メールが送信されます').'</font>',
+					'after' => $after_msg,
 					'separator'=>"　", 
 					'disabled'=>false, 
 					'legend' => false,
@@ -158,10 +178,6 @@
 				);
 
 				echo $this->Form->input('Group',				array('label' => '所属グループ',	'size' => 20));
-				
-				// 承認モード判定用
-				if($this->request->data['Member']['status']=='0')
-					echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'is_apply'));
 				
 				function getBlockTag($title)
 				{

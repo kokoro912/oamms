@@ -20,7 +20,7 @@
 		<div class="msg">
 			<p>入会申込を受け付けました。</p>
 			<p>ご連絡があるまでしばらくお待ちください。</p>
-			<button class="btn btn-default" onclick="location.href='../webroot/website/'">戻る</button>
+			<button class="btn btn-default" onclick="location.href='<?php echo Configure::read('website_url');?>'">戻る</button>
 		</div>
 	</div>
 </div>

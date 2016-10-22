@@ -10,7 +10,7 @@
 パスワード : <?php echo $password; ?>
 
 会員ページのURL
-http://tsukuba.at-iroha.jp/members/
+http://tsukuba.at-iroha.jp/oamms/members/
 
 このメールは送信専用のアドレスから送信しております。
 返信するとエラーになりますので、お問い合せ等は下記の

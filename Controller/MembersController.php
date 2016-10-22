@@ -290,8 +290,8 @@ class MembersController extends AppController
 			$is_approval_mode = false;
 			
 			if(
-				($this->request->data['Member']['mode']=='is_apply')&&
-				($this->request->data['Member']['status']=='1')
+				(@$this->request->data['Member']['mode']=='is_apply')&&
+				(@$this->request->data['Member']['status']=='1')
 			)
 			{
 				$is_approval_mode = true;

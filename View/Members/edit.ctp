@@ -114,6 +114,21 @@
 				echo getBlockTag('紹介者情報');
 				echo $this->Form->input('intro_username',		array('label' => '会員番号'));
 				echo $this->Form->input('intro_name',			array('label' => '氏名'));
+				
+				// 入会申込の場合のみ表示
+				if($this->action=='add')
+				{
+					echo $this->Form->input('member_kind',	array(
+						'type' => 'radio',
+						'before' => '<label class="col col-md-3 col-sm-4 control-label">会員種別</label>',
+						'separator'=>"　", 
+						'disabled'=>false, 
+						'legend' => false,
+						'class' => false,
+						'options' => Configure::read('member_kind')
+						)
+					);
+				}
 
 				echo $this->Form->input('subscription',	array(
 					'type' => 'radio',
@@ -151,7 +166,7 @@
 			<div class="form-group">
 				<div class="col col-md-9 col-md-offset-3">
 					<?php echo $this->Form->submit(($this->action == 'edit') ? __('更新') :  __('入会申込'), Configure::read('form_submit_defaults')); ?>
-					<button class="btn btn-default" onclick="location.href='../webroot/website/'">キャンセル</button>
+					<button class="btn btn-default" onclick="location.href='<?php echo Configure::read('website_url');?>'">キャンセル</button>
 				</div>
 			</div>
 		</div>

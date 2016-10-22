@@ -3,7 +3,7 @@
 
 入会申込者 : <?php echo $name; ?> 様
 
-http://tsukuba.at-iroha.jp/admin/
+http://tsukuba.at-iroha.jp/oamms/admin/
 
 -----------------------------------------------------
 一般社団法人XXX学会

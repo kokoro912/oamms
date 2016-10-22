@@ -125,6 +125,13 @@ class Member extends AppModel
 				)
 			)
 		),
+		'member_kind' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
 		'password' => array(
 				array(
 						'rule' => 'alphaNumeric',
