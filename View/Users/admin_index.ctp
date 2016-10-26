@@ -9,6 +9,7 @@
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('User', array('action' => 'index'));
+			/*
 			echo $this->Form->input('group_id',		array(
 				'label' => 'グループ : ', 
 				'options'=>$groups, 
@@ -18,6 +19,7 @@
 				'class' => 'form-control',
 				'onchange' => '$("#UserIndexForm").submit();'
 			));
+			*/
 			echo $this->Form->input('username',		array('label' => 'ログインID : ', 'required' => false));
 			echo $this->Form->input('name',			array('label' => '氏名 : '  , 'required' => false, 'value'=>$name));
 		?>
@@ -31,8 +33,11 @@
 			<tr>
 				<th><?php echo $this->Paginator->sort('username', 'ログインID'); ?></th>
 				<th><?php echo $this->Paginator->sort('name', '氏名'); ?></th>
-				<th><?php echo $this->Paginator->sort('role', 'ロール'); ?></th>
+				<!--
+				<th><?php echo $this->Paginator->sort('email', 'メールアドレス'); ?></th>
 				<th class="ib-col-datetime"><?php echo $this->Paginator->sort('last_logined', '最終ログイン日時'); ?></th>
+				-->
+				<th class="ib-col-datetime"><?php echo $this->Paginator->sort('modified', '更新日時'); ?></th>
 				<th class="ib-col-datetime"><?php echo $this->Paginator->sort('created', '作成日時'); ?></th>
 				<th class="ib-col-action"><?php echo __('Actions'); ?></th>
 			</tr>
@@ -42,8 +47,11 @@
 	<tr>
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['name']); ?></td>
-		<td><?php echo h(Configure::read('user_role.'.$user['User']['role'])); ?>&nbsp;</td>
+		<!--
+		<td><?php echo h($user['User']['email']); ?></td>
 		<td class="ib-col-datetime"><?php echo h(Utils::getYMDHN($user['User']['last_logined'])); ?>&nbsp;</td>
+		-->
+		<td class="ib-col-datetime"><?php echo h(Utils::getYMDHN($user['User']['modified'])); ?>&nbsp;</td>
 		<td class="ib-col-datetime"><?php echo h(Utils::getYMDHN($user['User']['created'])); ?>&nbsp;</td>
 		<td class="ib-col-action">
 			<button type="button" class="btn btn-success"
