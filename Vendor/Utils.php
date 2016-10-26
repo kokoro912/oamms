@@ -28,6 +28,16 @@ class Utils
 		return substr($str, 0, 16);
 	}
 	
+	public static function showItem($label, $value)
+	{
+?>
+		<div class="form-group">
+			<label for="MemberWorkName1" class="col col-md-3 col-sm-4 control-label"><?php echo __($label); ?></label>
+			<div class="col col-md-9 col-sm-8"><div class="show-item"><?php echo h($value); ?></div></div>
+		</div>
+<?php
+	}
+	
 	public static function getHNSBySec($sec)
 	{
 		$hour	= floor($sec / 3600);

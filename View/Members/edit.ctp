@@ -25,7 +25,10 @@
 		color: white;
 		padding: 5px;
 	}
-	
+	.show-item
+	{
+		padding-top	: 7px;
+	}
 </style>
 <?php $this->end(); ?>
 <?php $this->Html->scriptStart(array('inline' => false)); ?>
@@ -45,59 +48,70 @@
 			<?php echo $this->Form->create('Member', Configure::read('form_defaults')); ?>
 			<?php
 				echo $this->Form->input('id');
-				//echo $this->Form->input('username',				array('label' => '会員番号'));
-				echo $this->Form->input('name',					array('label' => '氏名'));
-				echo $this->Form->input('kana',					array('label' => 'カナ'));
-				echo $this->Form->input('nation_id',			array('label' => '国籍'));
-				echo $this->Form->input('birth_day', array(
-					'type' => 'date',
-					'dateFormat' => 'YMD',
-					'monthNames' => false,
-					'minYear' => date('Y') - 100,
-					'maxYear' => date('Y'),
-					'separator' => ' / ',
-					'label'=> '生年月日 : ',
-					'class'=>'form-control date',
-					'style' => 'display: inline;',
-				));
 				
-				echo $this->Form->input('gender',	array(
-					'type' => 'radio',
-					'before' => '<label class="col col-md-3 col-sm-4 control-label">性別</label>',
-					'separator'=>"　", 
-					'disabled'=>false, 
-					'legend' => false,
-					'class' => false,
-					'options' => Configure::read('gender')
-					)
-				);
+				if($this->action == 'edit')
+				{
+					Utils::showItem('会員番号',		$member['Member']['username']);
+					Utils::showItem('氏名',			$member['Member']['name']);
+					Utils::showItem('カナ',			$member['Member']['kana']);
+					Utils::showItem('国籍',			$member['Nation']['title']);
+					Utils::showItem('生年月日',		$member['Member']['birthday']);
+				}
+				else
+				{
+					echo $this->Form->input('name',					array('label' => __('氏名')));
+					echo $this->Form->input('kana',					array('label' => __('カナ')));
+					echo $this->Form->input('nation_id',			array('label' => __('国籍')));
+					echo $this->Form->input('birthday', array(
+						'type' => 'date',
+						'dateFormat' => 'YMD',
+						'monthNames' => false,
+						'minYear' => date('Y') - 100,
+						'maxYear' => date('Y'),
+						'separator' => ' / ',
+						'label'=> '生年月日 : ',
+						'class'=>'form-control date',
+						'style' => 'display: inline;',
+					));
+					
+					echo $this->Form->input('gender',	array(
+						'type' => 'radio',
+						'before' => '<label class="col col-md-3 col-sm-4 control-label">性別</label>',
+						'separator'=>"　", 
+						'disabled'=>false, 
+						'legend' => false,
+						'class' => false,
+						'options' => Configure::read('gender')
+						)
+					);
+				}
 				
 				
 				echo getBlockTag('勤務先・在学先');
-				echo $this->Form->input('work_name1',			array('label' => '企業 / 学校名'));
-				echo $this->Form->input('work_name2',			array('label' => '部署・課 / 学部・学科'));
-				echo $this->Form->input('work_title',			array('label' => '役職'));
-				echo $this->Form->input('work_zip',				array('label' => '郵便番号'));
-				echo $this->Form->input('work_prefecture',		array('label' => '都道府県'));
-				echo $this->Form->input('work_address1',		array('label' => '住所1'));
-				echo $this->Form->input('work_address2',		array('label' => '住所2'));
-				echo $this->Form->input('work_tel_no',			array('label' => '電話番号'));
-				echo $this->Form->input('work_fax_no',			array('label' => 'FAX番号'));
+				echo $this->Form->input('work_name1',			array('label' => __('企業 / 学校名')));
+				echo $this->Form->input('work_name2',			array('label' => __('部署・課 / 学部・学科')));
+				echo $this->Form->input('work_title',			array('label' => __('役職')));
+				echo $this->Form->input('work_zip',				array('label' => __('郵便番号')));
+				echo $this->Form->input('work_prefecture',		array('label' => __('都道府県')));
+				echo $this->Form->input('work_address1',		array('label' => __('住所1')));
+				echo $this->Form->input('work_address2',		array('label' => __('住所2')));
+				echo $this->Form->input('work_tel_no',			array('label' => __('電話番号')));
+				echo $this->Form->input('work_fax_no',			array('label' => __('FAX番号')));
 				
 				echo getBlockTag('自宅');
-				echo $this->Form->input('zip',					array('label' => '郵便番号'));
-				echo $this->Form->input('prefecture',			array('label' => '都道府県'));
-				echo $this->Form->input('address1',				array('label' => '住所1'));
-				echo $this->Form->input('address2',				array('label' => '住所2'));
-				echo $this->Form->input('tel_no',				array('label' => '電話番号'));
-				echo $this->Form->input('fax_no',				array('label' => 'FAX番号'));
-				echo $this->Form->input('email',				array('label' => 'メールアドレス'));
+				echo $this->Form->input('zip',					array('label' => __('郵便番号')));
+				echo $this->Form->input('prefecture',			array('label' => __('都道府県')));
+				echo $this->Form->input('address1',				array('label' => __('住所1')));
+				echo $this->Form->input('address2',				array('label' => __('住所2')));
+				echo $this->Form->input('tel_no',				array('label' => __('電話番号')));
+				echo $this->Form->input('fax_no',				array('label' => __('FAX番号')));
+				echo $this->Form->input('email',				array('label' => __('メールアドレス')));
 				
 				echo getBlockTag('最終学歴');
-				echo $this->Form->input('school',				array('label' => '学校名'));
-				echo $this->Form->input('department',			array('label' => '研究科、学部名'));
-				echo $this->Form->input('event',				array('label' => '専攻、学科'));
-				echo $this->Form->input('degree',				array('label' => '既得学位'));
+				echo $this->Form->input('school',				array('label' => __('学校名')));
+				echo $this->Form->input('department',			array('label' => __('研究科、学部名')));
+				echo $this->Form->input('event',				array('label' => __('専攻、学科')));
+				echo $this->Form->input('degree',				array('label' => __('既得学位')));
 				
 				echo $this->Form->input('graduated', array(
 					'type' => 'date',
@@ -111,9 +125,12 @@
 					'style' => 'display: inline;',
 				));
 
-				echo getBlockTag('紹介者情報');
-				echo $this->Form->input('intro_username',		array('label' => '会員番号'));
-				echo $this->Form->input('intro_name',			array('label' => '氏名'));
+				if($this->action == 'add')
+				{
+					echo getBlockTag('紹介者情報');
+					echo $this->Form->input('intro_username',		array('label' => __('会員番号')));
+					echo $this->Form->input('intro_name',			array('label' => __('氏名')));
+				}
 				
 				// 入会申込の場合のみ表示
 				if($this->action=='add')
