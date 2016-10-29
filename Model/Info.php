@@ -61,13 +61,19 @@ class Info extends AppModel
 	 *
 	 * @var array
 	 */
-	public $belongsTo = array(
-			'User' => array(
-					'className' => 'User',
-					'foreignKey' => 'user_id',
+	public $hasAndBelongsToMany = array(
+			'Group' => array(
+					'className' => 'Group',
+					'joinTable' => 'infos_groups',
+					'foreignKey' => 'info_id',
+					'associationForeignKey' => 'group_id',
+					'unique' => 'keepExisting',
 					'conditions' => '',
 					'fields' => '',
-					'order' => ''
-			),
+					'order' => '',
+					'limit' => '',
+					'offset' => '',
+					'finderQuery' => ''
+	 		)
 	);
 }

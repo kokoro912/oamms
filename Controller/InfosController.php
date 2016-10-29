@@ -48,8 +48,38 @@ class InfosController extends AppController
 		
 		$this->set('info', $info[0]);
 		
-		$this->Info->recursive = 0;
-		$this->set('infos', $this->Paginator->paginate());
+		// 自分自身が所属するグループのIDの配列を作成
+		$group_id_list = array();
+		
+		foreach ($groups as $group)
+		{
+			$group_id_list[count($group_id_list)] = $group['Group']['id'];
+		}
+		
+		// グループ設定されていない、もしくは自分の所属するグループあてお知らせのみを取得する
+		$this->paginate = array(
+			'Info' => array(
+				'fields' => array('*', 'InfoGroup.group_id'),
+				'conditions' => array('OR' => array(
+					array('InfoGroup.group_id' => null), 
+					array('InfoGroup.group_id' => $group_id_list)
+				)),
+				'limit' => 20,
+				'joins' => array(
+					array(
+						'type' => 'LEFT OUTER',
+						'alias' => 'InfoGroup',
+						'table' => 'ib_infos_groups',
+						'conditions' => 'Info.id = InfoGroup.info_id'
+					),
+				),
+				'group' => array('Info.id'),
+			)
+		);
+
+		$infos = $this->paginate();
+		
+		$this->set('infos', $infos);
 	}
 
 	/**
@@ -129,7 +159,12 @@ class InfosController extends AppController
 			);
 			$this->request->data = $this->Info->find('first', $options);
 		}
-		$users = $this->Info->User->find('list');
+		//$users = $this->Info->User->find('list');
+
+		$this->Group = new Group();
+		
+		$groups = $this->Group->find('list');
+		$this->set(compact('groups'));
 	}
 
 	/**
