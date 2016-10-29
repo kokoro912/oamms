@@ -30,7 +30,7 @@ $is_active = (($this->name=='Events')||($this->name=='Contents')||($this->name==
 echo '<li class="'.$is_active.'">'.$this->Html->link(__('イベント'), array('controller' => 'events', 'action' => 'index')).'</li>';
 
 $is_active = ($this->name=='MembersEvents') ? ' active' : '';
-echo '<li class="'.$is_active.'">'.$this->Html->link(__('イベント申込履歴'), array('controller' => 'members_events', 'action' => 'index')).'</li>';
+echo '<li class="'.$is_active.'">'.$this->Html->link(__('イベント申込状況'), array('controller' => 'members_events', 'action' => 'index')).'</li>';
 
 $is_active = ($this->name=='Settings') ? ' active' : '';
 echo '<li class="'.$is_active.'">'.$this->Html->link(__('システム設定'), array('controller' => 'settings', 'action' => 'index')).'</li>';

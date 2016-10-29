@@ -46,7 +46,7 @@ echo $this->Html->getCrumbs(' / ');
 		<div class="form-group">
 			<label class="col col-md-3 col-sm-4 control-label">申込受付日時</label>
 			<div class="col col-md-9 col-sm-8">
-				<?php echo h($event['Event']['opened']); ?> ～
+				<?php echo h($event['Event']['opened']); ?> 〜
 				<?php echo h($event['Event']['closed']); ?>
 			</div>
 		</div>
@@ -72,7 +72,7 @@ echo $this->Html->getCrumbs(' / ');
 						($today <= $closed)
 					)
 					{
-						if($history)
+						if($status==1)
 						{
 							echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'cancel'));
 							echo $this->Form->submit('申込をキャンセル', Configure::read('form_submit_defaults'));

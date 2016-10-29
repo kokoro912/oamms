@@ -19,7 +19,7 @@
 </style>
 <?php $this->end(); ?>
 <div class="members_events index">
-	<div class="ib-page-title"><?php echo __('イベント申込履歴一覧'); ?></div>
+	<div class="ib-page-title"><?php echo __('イベント申込状況'); ?></div>
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('MembersEvent', array('action' => 'index'));
@@ -48,7 +48,7 @@
 //				'minYear' => date('Y') - 5,
 //				'maxYear' => date('Y'),
 //				'separator' => ' / ',
-//				'label'=> '～',
+//				'label'=> '〜',
 //				'class' => 'form-control date-select',
 //				'style' => 'display: inline;',
 //				'value' => $to_date
@@ -71,7 +71,7 @@
 	<?php foreach ($members_events as $members_event): ?>
 	<tr>
 		<td><?php echo h($members_event['Event']['title']); ?>&nbsp;</td>
-		<td><?php echo h($members_event['Event']['started']); ?> ～ <?php echo h($members_event['Event']['ended']); ?>&nbsp;</td>
+		<td><?php echo h($members_event['Event']['started']); ?> 〜 <?php echo h($members_event['Event']['ended']); ?>&nbsp;</td>
 		<td><?php echo h($members_event['Member']['name']); ?>&nbsp;</td>
 		<td><?php echo h($members_event['MembersEvent']['created']); ?>&nbsp;</td>
 		<td><?php echo h(Configure::read('apply_status.'.$members_event['MembersEvent']['status'])); ?>&nbsp;</td>

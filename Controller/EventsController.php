@@ -82,12 +82,13 @@ class EventsController extends AppController
 		$options = array(
 			'conditions' => array(
 				'MembersEvent.member_id' => $this->Session->read('Auth.User.id'),
-				'MembersEvent.event_id'  => $id,
-				'MembersEvent.status'    => 0
+				'MembersEvent.event_id'  => $id
 			)
 		);
 		
 		$history = $this->MembersEvent->find('first', $options);
+		
+		$status = ($history) ? $history['MembersEvent']['status'] : 0;
 		
 		if ($this->request->is(array(
 				'post',
@@ -95,19 +96,31 @@ class EventsController extends AppController
 		)))
 		{
 			debug($this->request->data);
+			/*
 			$data = array(
 				'event_id'    => $id,
 				'member_id'   => $this->Session->read('Auth.User.id'),
 				'status'      => 0,
 			);
+			*/
 			
 			$this->loadModel('MembersEvent');
+			
+			// イベント申込情報が存在しない場合のみ、新規に作成する
+			if(!$history)
+			{
+				$this->MembersEvent->create();
+				$history['MembersEvent']['event_id'] = $id;
+				$history['MembersEvent']['member_id'] = $this->Session->read('Auth.User.id');
+				$history['MembersEvent']['status'] = 0;
+			}
+			
 			
 			// イベント申込
 			if($this->request->data['Event']['mode']=='apply')
 			{
-				$this->MembersEvent->create();
-				$this->MembersEvent->save($data);
+				$history['MembersEvent']['status'] = 1;
+				$this->MembersEvent->save($history);
 				$this->Flash->success(__('イベントを申し込みました'));
 				return $this->redirect(array(
 					'controller' => 'members_events',
@@ -118,7 +131,7 @@ class EventsController extends AppController
 			// イベント申込キャンセル
 			if($this->request->data['Event']['mode']=='cancel')
 			{
-				$history['MembersEvent']['status'] = 1;
+				$history['MembersEvent']['status'] = 2;
 				$this->MembersEvent->save($history);
 				$this->Flash->success(__('申込をキャンセル致しました'));
 				return $this->redirect(array(
@@ -142,7 +155,7 @@ class EventsController extends AppController
 		}
 		
 		
-		$this->set(compact('event', 'history'));
+		$this->set(compact('event', 'history', 'status'));
 	}
 
 	public function admin_add()

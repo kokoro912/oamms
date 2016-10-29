@@ -51,7 +51,7 @@
 				<h4 class="list-group-item-heading"><?php echo h($event['Event']['title']);?></h4>
 				<p class="list-group-item-text">
 					<span>開催期間: <?php echo h(Utils::getYMD($event['Event']['started'])); ?></span><br>
-					<span>申込期間: <?php echo h(Utils::getYMD($event['Event']['opened'])); ?>～<?php echo h(Utils::getYMD($event['Event']['closed'])); ?></span>
+					<span>申込期間: <?php echo h(Utils::getYMD($event['Event']['opened'])); ?>〜<?php echo h(Utils::getYMD($event['Event']['closed'])); ?></span>
 				</p>
 			</a>
 		<?php endforeach; ?>

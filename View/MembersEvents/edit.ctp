@@ -17,7 +17,7 @@
 		echo $this->Form->input('study_sec');
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('•Û‘¶')); ?>
+<?php echo $this->Form->end(__('ä¿å­˜')); ?>
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
