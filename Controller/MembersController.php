@@ -202,6 +202,10 @@ class MembersController extends AppController
 						'action' => 'thanks'
 					));
 				}
+				else
+				{
+					$this->Flash->success(__('会員情報を変更致しました'));
+				}
 			}
 			else
 			{
@@ -223,7 +227,17 @@ class MembersController extends AppController
 
 		$groups  = $this->Group->find('list');
 		$nations = $this->Nation->find('list');
-		$this->set(compact('groups', 'nations'));
+		
+		// 会員情報を取得
+		$options = array(
+			'conditions' => array(
+				'Member.' . $this->Member->primaryKey => $id
+			)
+		);
+		
+		$member = $this->Member->find('first', $options);
+
+		$this->set(compact('groups', 'nations', 'member'));
 	}
 
 	public function thanks()

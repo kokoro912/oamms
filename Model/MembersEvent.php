@@ -90,7 +90,7 @@ class MembersEvent extends AppModel
    LEFT OUTER JOIN
 		(SELECT event_id, COUNT(*) as apply_count
 		   FROM ib_members_events
-		  WHERE status = 0
+		  WHERE status = 1
 		    AND member_id =:member_id
 		  GROUP BY event_id) ApplyCount
      ON ApplyCount.event_id   = Event.id

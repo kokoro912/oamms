@@ -21,13 +21,12 @@ $config['member_kind']		= array(
 );
 $config['subscription']		= array('0' => '購読しない', '1' => '購読する');
 $config['send_type']		= array('0' => '自宅', '1' => '勤務先');
-$config['apply_status']		= array('0' => '申込', '1' => 'キャンセル');
+$config['apply_status']		= array('1' => '申込', '2' => 'キャンセル');
 
 $config['admin_from']		= array('info@irohasoft.jp' => 'OAMMS');
 $config['admin_to']			= array('miura@irohasoft.jp');
 
-$config['website_url']		= 'tsukuba.at-iroha.jp';
-
+$config['website_url']		= 'http://tsukuba.at-iroha.jp';
 
 // フォームのスタイル(BoostCake)の基本設定
 $config['form_defaults'] = array(
@@ -50,7 +49,7 @@ $config['form_submit_defaults'] = array(
 
 $config['theme_colors']   = array(
 	'#337ab7' => 'default',
-	'#101010' => 'ocomms',
+	'#101010' => 'oamms',
 	'#006888' => 'marine blue',
 	'#003f8e' => 'ink blue',
 	'#00a960' => 'green',
