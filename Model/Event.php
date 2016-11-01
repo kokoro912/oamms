@@ -28,32 +28,41 @@ class Event extends AppModel
 	 * @var array
 	 */
 	public $validate = array(
-			'title' => array(
-					'notBlank' => array(
-							'rule' => array(
-									'notBlank'
-							)
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										)
-			),
-			'sort_no' => array(
-					'numeric' => array(
-							'rule' => array(
-									'numeric'
-							)
-					// 'message' => 'Your custom message here',
-					// 'allowEmpty' => false,
-					// 'required' => false,
-					// 'last' => false, // Stop validation after this rule
-					// 'on' => 'create', // Limit validation to 'create' or
-					// 'update' operations
-										)
+		'title' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+								)
+		),
+		'started' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
 			)
+		),
+		'ended' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'opened' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
+		'closed' => array(
+			'notBlank' => array(
+				'rule' => array(
+						'notBlank'
+				)
+			)
+		),
 	);
 	
 	// The Associations below have been created with all possible keys, those
