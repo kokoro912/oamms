@@ -21,13 +21,26 @@
 	
 	.block-title
 	{
-		background: #31708f;
-		color: white;
-		padding: 5px;
+		background	: #31708f;
+		color		: white;
+		padding		: 5px;
 	}
+	
 	.show-item
 	{
 		padding-top	: 7px;
+	}
+	
+	#MemberZip
+	{
+		width		: 120px;
+		float		: left;
+	}
+	
+	#btnSearchAddress
+	{
+		float		: left;
+		margin		: 3px;
 	}
 </style>
 <?php $this->end(); ?>
@@ -37,7 +50,55 @@
 		$('#EventEvent').select2({placeholder: "受講するコースを選択して下さい。(複数選択可)",});
 		// パスワードの自動復元を防止
 		setTimeout('$("#StudentNewPassword").val("");',100);
+		
+		$("#MemberZip").parent().append('<input id="btnSearchAddress" type="button" value="住所検索" onclick="setAddress();">');
 	});
+	
+	
+	function setAddress()
+	{
+		var zip = $('#MemberZip').val();
+
+		if(zip=="")
+		{
+			alert("郵便番号が入力されていません");
+			return;
+		}
+
+		$.ajax({
+			type : 'get',
+			url : 'https://maps.googleapis.com/maps/api/geocode/json',
+			crossDomain : true,
+			dataType : 'json',
+			data : {
+				address : zip,
+				language : 'ja',
+				sensor : false
+			},
+			success : function(resp)
+			{
+				if(resp.status == "OK") {
+					// APIのレスポンスから住所情報を取得
+					var obj = resp.results[0].address_components;
+					
+					if (obj.length < 5)
+					{
+						alert('正しい郵便番号を入力してください');
+						return false;
+					}
+					
+					//$('#country').val(obj[4]['long_name']); // 国
+					$('#MemberPrefecture').val(obj[3]['long_name']); // 都道府県
+					$('#MemberAddress1').val(obj[2]['long_name'] + obj[1]['long_name']);	// 市区町村 + 番地
+				}
+				else
+				{
+					alert('住所情報が取得できませんでした');
+					return false;
+				}
+			}
+		});
+	}
 <?php $this->Html->scriptEnd(); ?>
 <div class="users form">
 	<div class="panel panel-default">
