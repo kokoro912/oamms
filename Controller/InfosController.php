@@ -35,6 +35,8 @@ class InfosController extends AppController
 	 */
 	public function index()
 	{
+		$this->loadModel('MembersGroup');
+		
 		// 全体のお知らせの取得
 		App::import('Model', 'Setting');
 		$this->Setting = new Setting();
@@ -48,12 +50,19 @@ class InfosController extends AppController
 		
 		$this->set('info', $info[0]);
 		
+		// 自分の所属しているグループ一覧を取得
+		$groups = $this->MembersGroup->find('all', array(
+			'conditions' => array(
+				'member_id' => $this->Session->read('Auth.User.id')
+			)
+		));
+		
 		// 自分自身が所属するグループのIDの配列を作成
 		$group_id_list = array();
 		
 		foreach ($groups as $group)
 		{
-			$group_id_list[count($group_id_list)] = $group['Group']['id'];
+			$group_id_list[count($group_id_list)] = $group['MembersGroup']['id'];
 		}
 		
 		// グループ設定されていない、もしくは自分の所属するグループあてお知らせのみを取得する
@@ -76,7 +85,7 @@ class InfosController extends AppController
 				'group' => array('Info.id'),
 			)
 		);
-
+		
 		$infos = $this->paginate();
 		
 		$this->set('infos', $infos);
