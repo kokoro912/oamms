@@ -6,13 +6,13 @@
 		</div>
 		<div class="panel-body">
 			<?php
-				echo $this->Form->create('User', Configure::read('form_defaults'));
-				echo $this->Form->input('User.new_password', array(
+				echo $this->Form->create('Member', Configure::read('form_defaults'));
+				echo $this->Form->input('Member.new_password', array(
 					'label' => 'パスワード',
 					'type' => 'password',
 					'autocomplete' => 'off'
 				));
-				echo $this->Form->input('User.new_password2', array(
+				echo $this->Form->input('Member.new_password2', array(
 					'label' => 'パスワード (確認用)',
 					'type' => 'password',
 					'autocomplete' => 'off'
