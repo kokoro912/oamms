@@ -70,7 +70,46 @@ class MembersController extends AppController
 
 	public function setting()
 	{
-		$this->admin_setting();
+		if ($this->request->is(array(
+				'post',
+				'put'
+		)))
+		{
+			$this->request->data['Member']['id'] = $this->Session->read('Auth.User.id');
+
+			if($this->request->data['Member']['new_password'] != $this->request->data['Member']['new_password2'])
+			{
+				$this->Flash->success(__('入力された「パスワード」と「パスワード（確認用）」が一致しません'));
+				return;
+			}
+
+			if($this->request->data['Member']['new_password'] !== '')
+			{
+				$this->request->data['Member']['password'] = $this->request->data['Member']['new_password'];
+
+				if ($this->Member->save($this->request->data))
+				{
+					$this->Flash->success(__('パスワードが保存されました'));
+				}
+				else
+				{
+					$this->Flash->error(__('The user could not be saved. Please, try again.'));
+				}
+			}
+			else
+			{
+				$this->Flash->error(__('パスワードを入力して下さい'));
+			}
+		}
+		else
+		{
+			$options = array(
+				'conditions' => array(
+						'Member.' . $this->Member->primaryKey => $this->Session->read('Auth.User.id')
+				)
+			);
+			$this->request->data = $this->Member->find('first', $options);
+		}
 	}
 
 	public function admin_delete($id = null)
@@ -386,51 +425,6 @@ class MembersController extends AppController
 		$groups  = $this->Group->find('list');
 		$nations = $this->Nation->find('list');
 		$this->set(compact('groups', 'nations'));
-	}
-
-	public function admin_setting()
-	{
-		if ($this->request->is(array(
-				'post',
-				'put'
-		)))
-		{
-			//debug($this->request->data);
-			$this->request->data['Member']['id'] = $this->Session->read('Auth.Member.id');
-
-			if($this->request->data['Member']['new_password'] != $this->request->data['Member']['new_password2'])
-			{
-				$this->Flash->success(__('入力された「パスワード」と「パスワード（確認用）」が一致しません'));
-				return;
-			}
-
-			if($this->request->data['Member']['new_password'] !== '')
-			{
-				$this->request->data['Member']['password'] = $this->request->data['Member']['new_password'];
-
-				if ($this->Member->save($this->request->data))
-				{
-					$this->Flash->success(__('パスワードが保存されました'));
-				}
-				else
-				{
-					$this->Flash->error(__('The user could not be saved. Please, try again.'));
-				}
-			}
-			else
-			{
-				$this->Flash->error(__('パスワードを入力して下さい'));
-			}
-		}
-		else
-		{
-			$options = array(
-				'conditions' => array(
-						'Member.' . $this->Member->primaryKey => $this->Session->read('Auth.Member.id')
-				)
-			);
-			$this->request->data = $this->Member->find('first', $options);
-		}
 	}
 
 	public function admin_login()
