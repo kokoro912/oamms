@@ -94,12 +94,10 @@ class MembersEvent extends AppModel
 		    AND member_id =:member_id
 		  GROUP BY event_id) ApplyCount
      ON ApplyCount.event_id   = Event.id
-  ORDER BY Event.id
+  ORDER BY ApplyCount.apply_count DESC
 EOF;
-		// debug($user_id);
-
 		$params = array(
-				'member_id' => $member_id
+			'member_id' => $member_id
 		);
 
 		$data = $this->query($sql, $params);
@@ -113,13 +111,13 @@ EOF;
 	);
 
 	public $filterArgs = array(
-			'username' => array(
-					'type' => 'like',
-					'field' => 'Member.username'
-			),
-			'name' => array(
-					'type' => 'like',
-					'field' => 'Member.name'
-			)
+		'username' => array(
+			'type' => 'like',
+			'field' => 'Member.username'
+		),
+		'name' => array(
+			'type' => 'like',
+			'field' => 'Member.name'
+		)
 	);
 }

@@ -31,12 +31,6 @@ class EventsController extends AppController
 			'Paginator'
 	);
 
-	public function index()
-	{
-		$this->Event->recursive = 0;
-		$this->set('events', $this->Paginator->paginate());
-	}
-
 	public function admin_index()
 	{
 		$this->Event->recursive = 0;

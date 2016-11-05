@@ -50,15 +50,6 @@ class MembersEventsController extends AppController
 
 	public function index()
 	{
-		// 受講コース情報の取得
-		$this->MembersEvent->recursive = 0;
-		$events = $this->MembersEvent->find('all', 
-				array(
-						'conditions' => array(
-								'MembersEvent.member_id ' => $this->Session->read('Auth.User.id')
-						)
-				));
-		
 		$data = $this->MembersEvent->getMemberEvent( $this->Session->read('Auth.User.id') );
 		
 		$no_events = "";
