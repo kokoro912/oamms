@@ -72,6 +72,37 @@ class MembersEventsController extends AppController
 	{
 		// 検索条件設定
 		$this->Prg->commonProcess();
+
+		$conditions = $this->MembersEvent->parseCriteria($this->Prg->parsedParams());
+
+		$status		= (isset($this->request->query['status'])) ? $this->request->query['status'] : "";
+		$event_id	= (isset($this->request->query['event_id'])) ? $this->request->query['event_id'] : "";
+		$username	= (isset($this->request->query['username']))     ? $this->request->query['username'] : "";
+
+		$conditions = array();
+
+		if($event_id != "")
+			$conditions['Event.id'] = $event_id;
+		
+		if($status != "")
+			$conditions['MembersEvent.status'] = $status;
+
+		if($username != "")
+			$conditions['Member.username'] = $username;
+
+		$this->Paginator->settings['conditions'] = $conditions;
+		$this->Paginator->settings['order']      = 'MembersEvent.created desc';
+		
+		$members_events = $this->paginate();
+		
+		$this->Event = new Event();
+		$events = $this->Event->find('list');
+		
+		$this->set(compact('events', 'members_events', 'event_id', 'status', 'username'));
+		
+		// 検索条件設定
+		/*
+		$this->Prg->commonProcess();
 		
 		$conditions = $this->MembersEvent->parseCriteria($this->Prg->parsedParams());
 		
@@ -108,5 +139,6 @@ class MembersEventsController extends AppController
 		$this->set('event_id',			$event_id);
 		$this->set('member_id',			$member_id);
 		$this->set('contenttitle',		$contenttitle);
+		*/
 	}
 }
