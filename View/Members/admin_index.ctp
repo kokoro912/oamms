@@ -9,10 +9,10 @@
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('Member',	array('action' => 'index'));
-			echo $this->Form->input('group_id',	array(
+			echo $this->Form->input('member_kind',	array(
 				'label' => '会員種別 : ', 
 				'options'=>Configure::read('member_kind'), 
-				'selected'=>$group_id, 
+				'selected'=>$member_kind, 
 				'empty' => '全て', 
 				'required'=>false, 
 				'class' => 'form-control',
@@ -21,13 +21,13 @@
 			echo $this->Form->input('status',	array(
 				'label' => 'ステータス : ', 
 				'options'=>Configure::read('member_status'), 
-				'selected'=>$group_id, 
+				'selected'=>$status, 
 				'empty' => '全て', 
 				'required'=>false, 
 				'class' => 'form-control',
 				'onchange' => '$("#MemberIndexForm").submit();'
 			));
-			echo $this->Form->input('membername',		array('label' => '会員番号 : ', 'required' => false));
+			echo $this->Form->input('username',		array('label' => '会員番号 : ', 'required' => false, 'value'=>$username));
 			echo $this->Form->input('name',			array('label' => '氏名 : '  , 'required' => false, 'value'=>$name));
 		?>
 		<input type="submit" class="btn btn-info btn-add" value="検索">
@@ -41,8 +41,8 @@
 				<th><?php echo $this->Paginator->sort('username',		'会員番号'); ?></th>
 				<th><?php echo $this->Paginator->sort('name',			'氏名'); ?></th>
 				<th><?php echo $this->Paginator->sort('member_kind',	'会員種別'); ?></th>
-				<th><?php echo $this->Paginator->sort('joined',			'入会日'); ?></th>
-				<th><?php echo $this->Paginator->sort('work_name1',		'所属1'); ?></th>
+				<th><?php echo $this->Paginator->sort('work_name1',		'所属'); ?></th>
+				<th><?php echo $this->Paginator->sort('created',		'入会申込日'); ?></th>
 				<th><?php echo $this->Paginator->sort('status',			'ステータス'); ?></th>
 				<th class="ib-col-action"><?php echo __('Actions'); ?></th>
 			</tr>
@@ -53,8 +53,8 @@
 		<td><?php echo h($member['Member']['username']); ?>&nbsp;</td>
 		<td><?php echo h($member['Member']['name']); ?></td>
 		<td><?php echo h(Configure::read('member_kind.'.$member['Member']['member_kind'])); ?>&nbsp;</td>
-		<td><?php echo h($member['Member']['joined']); ?>&nbsp;</td>
 		<td><?php echo h($member['Member']['work_name1']); ?>&nbsp;</td>
+		<td><?php echo h($member['Member']['created']); ?>&nbsp;</td>
 		<td><?php echo h(Configure::read('member_status.'.$member['Member']['status'])); ?>&nbsp;</td>
 		<td class="ib-col-action">
 			<button type="button" class="btn btn-success"

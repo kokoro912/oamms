@@ -171,7 +171,7 @@
 				echo getBlockTag('最終学歴');
 				echo $this->Form->input('school',				array('label' => __('学校名')));
 				echo $this->Form->input('department',			array('label' => __('研究科、学部名')));
-				echo $this->Form->input('event',				array('label' => __('専攻、学科')));
+				echo $this->Form->input('course',				array('label' => __('専攻、学科')));
 				echo $this->Form->input('degree',				array('label' => __('既得学位')));
 				
 				echo $this->Form->input('graduated', array(
@@ -244,7 +244,9 @@
 			<div class="form-group">
 				<div class="col col-md-9 col-md-offset-3">
 					<?php echo $this->Form->submit(($this->action == 'edit') ? __('更新') :  __('入会申込'), Configure::read('form_submit_defaults')); ?>
-					<button class="btn btn-default" onclick="location.href='<?php echo Configure::read('website_url');?>'">キャンセル</button>
+					<?php if($this->action=='add') {?>
+					<input type="button" class="btn btn-default" value="キャンセル" onclick="location.href='<?php echo Configure::read('website_url');?>';return false;">
+					<?php }?>
 				</div>
 			</div>
 		</div>

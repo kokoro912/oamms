@@ -1,4 +1,8 @@
 <?php echo $this->element('admin_menu');?>
+<?php $this->start('css-embedded'); ?>
+<style>
+</style>
+<?php $this->end(); ?>
 <div class="groups form">
 <?php echo $this->Html->link(__('<< 戻る'), array('action' => 'index'))?>
 	<div class="panel panel-default">
@@ -16,7 +20,7 @@
 					'monthNames' => false,
 					'separator' => ' / ',
 					'label'=> '開始日',
-					'style' => 'width:initial; display: inline;'
+					'style' => 'width:auto; display: inline;'
 				));
 				echo $this->Form->input('ended', array(
 					'type' => 'date',
@@ -24,7 +28,7 @@
 					'monthNames' => false,
 					'separator' => ' / ',
 					'label'=> '終了日',
-					'style' => 'width:initial; display: inline;'
+					'style' => 'width:auto; display: inline;'
 				));
 				echo $this->Form->input('opened', array(
 					'type' => 'date',
@@ -32,7 +36,7 @@
 					'monthNames' => false,
 					'separator' => ' / ',
 					'label'=> '受付開始日',
-					'style' => 'width:initial; display: inline;'
+					'style' => 'width:auto; display: inline;'
 				));
 				echo $this->Form->input('closed', array(
 					'type' => 'date',
@@ -40,7 +44,7 @@
 					'monthNames' => false,
 					'separator' => ' / ',
 					'label'=> '受付終了日',
-					'style' => 'width:initial; display: inline;'
+					'style' => 'width:auto; display: inline;'
 				));
 				echo $this->Form->input('content',	array('label' => __('詳細内容')));
 				echo $this->Form->input('comment',	array('label' => __('備考')));

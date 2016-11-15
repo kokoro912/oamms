@@ -112,7 +112,7 @@ class UsersController extends AppController
 		
 		$options = array(
 			'conditions' => array(
-					'User.username' => 'root'
+					'User.role' => 'admin'
 			)
 		);
 

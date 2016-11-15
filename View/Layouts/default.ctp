@@ -79,7 +79,16 @@
 		{
 			echo '<div class="ib-navi-item ib-right">'.$this->Html->link('ログアウト', $logoutURL).'</div>';
 			echo '<div class="ib-navi-sepa ib-right"></div>';
-			echo '<div class="ib-navi-item ib-right">'.$this->Html->link(__('設定'), array('controller' => 'members', 'action' => 'setting')).'</div>';
+			
+			if(isset($this->request->params['admin']))
+			{
+				echo '<div class="ib-navi-item ib-right">'.$this->Html->link(__('設定'), array('controller' => 'users', 'action' => 'setting')).'</div>';
+			}
+			else
+			{
+				echo '<div class="ib-navi-item ib-right">'.$this->Html->link(__('設定'), array('controller' => 'members', 'action' => 'setting')).'</div>';
+			}
+			
 			echo '<div class="ib-navi-sepa ib-right"></div>';
 			echo '<div class="ib-navi-item ib-right">ようこそ '.$loginedUser["name"].' さん </div>';
 		}

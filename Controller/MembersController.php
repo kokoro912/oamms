@@ -175,7 +175,7 @@ class MembersController extends AppController
 				$this->Member->id = $this->Auth->user('id');
 				// 最終ログイン日時を保存
 				$this->Member->saveField('last_logined', date(DATE_ATOM));
-				$this->writeLog('user_logined', '');
+				$this->writeLog('member_logined', '');
 				$this->Session->delete('Auth.redirect');
 				$this->redirect($this->Auth->redirect());
 			}
@@ -188,6 +188,12 @@ class MembersController extends AppController
 
 	public function add()
 	{
+		// 既にログインしている場合には強制ログアウト
+		if($this->Session->read('Auth.User.id'))
+		{
+			$this->Auth->logout();
+		}
+		
 		$this->edit();
 		$this->render('edit');
 	}
@@ -206,6 +212,7 @@ class MembersController extends AppController
 				'put'
 		)))
 		{
+			$this->request->data['Member']['graduated']['day'] = 1;
 			if ($this->Member->save($this->request->data))
 			{
 				if($this->action == 'add')
@@ -303,11 +310,19 @@ class MembersController extends AppController
 
 		$conditions = $this->Member->parseCriteria($this->Prg->parsedParams());
 
-		$group_id	= (isset($this->request->query['group_id'])) ? $this->request->query['group_id'] : "";
-		$username	= (isset($this->request->query['username'])) ? $this->request->query['username'] : "";
-		$name		= (isset($this->request->query['name']))     ? $this->request->query['name'] : "";
+		$group_id		= (isset($this->request->query['group_id'])) ? $this->request->query['group_id'] : "";
+		$member_kind	= (isset($this->request->query['member_kind'])) ? $this->request->query['member_kind'] : "";
+		$status			= (isset($this->request->query['status'])) ? $this->request->query['status'] : "";
+		$username		= (isset($this->request->query['username'])) ? $this->request->query['username'] : "";
+		$name			= (isset($this->request->query['name']))     ? $this->request->query['name'] : "";
 
 		$conditions = array();
+
+		if($member_kind != "")
+			$conditions['Member.member_kind'] = $member_kind;
+
+		if($status != "")
+			$conditions['Member.status'] = $status;
 
 		if($username != "")
 			$conditions['Member.username like'] = '%'.$username.'%';
@@ -315,13 +330,12 @@ class MembersController extends AppController
 		if($name != "")
 			$conditions['Member.name like'] = '%'.$name.'%';
 
-		$result = $this->paginate();
+		$this->Paginator->settings['conditions'] = $conditions;
+		$this->Paginator->settings['order'] = 'Member.created DESC';
+		$members = $this->paginate();
 
 		$this->Group = new Group();
-		$this->set('groups',   $this->Group->find('list'));
-		$this->set('members', $result);
-		$this->set('group_id', $group_id);
-		$this->set('name',     $name);
+		$this->set(compact('members', 'member_kind', 'group_id', 'status', 'username', 'name'));
 	}
 
 	public function admin_welcome()
@@ -361,6 +375,7 @@ class MembersController extends AppController
 					$this->request->data['Member']['password'] = $this->request->data['Member']['new_password'];
 			}
 
+			$this->request->data['Member']['graduated']['day'] = 1;
 			if ($this->Member->save($this->request->data))
 			{
 				$this->Flash->success(__('会員情報が保存されました'));
