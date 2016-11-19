@@ -33,18 +33,14 @@ class Event extends AppModel
 				'rule' => array(
 						'notBlank'
 				)
-			)
+								)
 		),
 		'started' => array(
 			'notBlank' => array(
 				'rule' => array(
 						'notBlank'
 				)
-			),
-			'checkStarted' => array(
-				'rule' => array('checkStarted'),
-				'message' => 'dummy',
-			),
+			)
 		),
 		'ended' => array(
 			'notBlank' => array(
@@ -58,11 +54,7 @@ class Event extends AppModel
 				'rule' => array(
 						'notBlank'
 				)
-			),
-			'checkOpened' => array(
-				'rule' => array('checkOpened'),
-				'message' => 'dummy',
-			),
+			)
 		),
 		'closed' => array(
 			'notBlank' => array(
@@ -99,20 +91,4 @@ class Event extends AppModel
 	 */
 	public $hasAndBelongsToMany = array(
 	);
-
-	public function checkStarted($date1, $date2)
-	{
-		$date1 = $this->data['Event']['started'];
-		$date2 = $this->data['Event']['ended'];
-		
-		return (strtotime($date1) <= strtotime($date2));
-	}
-
-	public function checkOpened($date1, $date2)
-	{
-		$date1 = $this->data['Event']['opened'];
-		$date2 = $this->data['Event']['closed'];
-		
-		return (strtotime($date1) <= strtotime($date2));
-	}
 }

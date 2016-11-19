@@ -10,8 +10,8 @@
 			<?php echo ($this->action == 'admin_edit') ? __('編集') :  __('新規イベント'); ?>
 		</div>
 		<div class="panel-body">
-			<?php echo $this->Form->create('Event', Configure::read('form_defaults')); ?>
 			<?php
+				echo $this->Form->create('Event', Configure::read('form_defaults'));
 				echo $this->Form->input('id');
 				echo $this->Form->input('title',	array('label' => __('イベント名')));
 				echo $this->Form->input('started', array(
@@ -20,7 +20,9 @@
 					'monthNames' => false,
 					'separator' => ' / ',
 					'label'=> '開始日',
-					'style' => 'width:auto; display: inline;'
+					'style' => 'width:auto; display: inline;',
+					'error' => '終了日以前の日付を選択してください',
+					'errorMessage' => true
 				));
 				echo $this->Form->input('ended', array(
 					'type' => 'date',
@@ -36,7 +38,9 @@
 					'monthNames' => false,
 					'separator' => ' / ',
 					'label'=> '受付開始日',
-					'style' => 'width:auto; display: inline;'
+					'style' => 'width:auto; display: inline;',
+					'error' => '受付終了日以前の日付を選択してください',
+					'errorMessage' => true
 				));
 				echo $this->Form->input('closed', array(
 					'type' => 'date',
@@ -54,6 +58,7 @@
 					<?php echo $this->Form->submit('保存', Configure::read('form_submit_defaults')); ?>
 				</div>
 			</div>
+			<?php echo $this->Form->end(); ?>
 		</div>
 	</div>
 </div>

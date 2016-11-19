@@ -169,18 +169,16 @@ class EventsController extends AppController
 				'put'
 		)))
 		{
-			$this->Event->set($this->data);
-			
 			if ($this->Event->save($this->request->data))
 			{
-				$this->Flash->success(__('イベントが保存されました'));
+				$this->Flash->success(__('コースが保存されました'));
 				return $this->redirect(array(
 						'action' => 'index'
 				));
 			}
 			else
 			{
-				$this->Flash->error(__('イベントの保存に失敗しました'));
+				$this->Flash->error(__('The event could not be saved. Please, try again.'));
 			}
 		}
 		else
@@ -215,6 +213,4 @@ class EventsController extends AppController
 				'action' => 'index'
 		));
 	}
-
-
 }
