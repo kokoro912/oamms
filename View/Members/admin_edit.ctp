@@ -41,8 +41,11 @@
 				echo $this->Form->input('id');
 				echo $this->Form->input('username',				array('label' => '会員番号'));
 				
-				// 申込中の場合、パスワードを自動発行する為、パスワードフィールドを表示しない
-				if($this->request->data['Member']['status']=='0')
+				// 編集かつ申込中の場合、パスワードを自動発行する為、パスワードフィールドを表示しない
+				if(
+					(@$this->request->data['Member'])&&
+					(@$this->request->data['Member']['status']=='0')
+				)
 				{
 					echo $this->Form->hidden('new_password', array('id'=>'new_password', 'value'=>''));
 				}
@@ -158,7 +161,10 @@
 				$after_msg = "";
 				
 				// 承認モード判定用
-				if($this->request->data['Member']['status']!='1')
+				if(
+					(@$this->request->data['Member'])&&
+					(@$this->request->data['Member']['status']!='1')
+				)
 				{
 					echo $this->Form->hidden('mode', array('id'=>'mode', 'value'=>'is_apply'));
 					$after_msg = '<font color="red">'.__('※ 承認に変更すると会員に承認完了メールが送信されます').'</font>';

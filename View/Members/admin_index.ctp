@@ -3,9 +3,11 @@
 <?php $this->end(); ?>
 <div class="members index">
 	<div class="ib-page-title"><?php echo __('会員一覧'); ?></div>
+	<!--
 	<div class="buttons_container">
 		<button type="button" class="btn btn-primary btn-add" onclick="location.href='<?php echo Router::url(array('action' => 'add')) ?>'">+ 追加</button>
 	</div>
+	-->
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('Member',	array('action' => 'index'));
