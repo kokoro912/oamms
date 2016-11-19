@@ -31,16 +31,18 @@
 		padding-top	: 7px;
 	}
 	
-	#MemberZip
+	#MemberZip,
+	#MemberWorkZip
 	{
 		width		: 120px;
 		float		: left;
 	}
 	
-	#btnSearchAddress
+	.btn-search-address
 	{
 		float		: left;
 		margin		: 3px;
+		font-weight	: normal;
 	}
 </style>
 <?php $this->end(); ?>
@@ -51,13 +53,16 @@
 		// パスワードの自動復元を防止
 		setTimeout('$("#StudentNewPassword").val("");',100);
 		
-		$("#MemberZip").parent().append('<input id="btnSearchAddress" type="button" value="住所検索" onclick="setAddress();">');
+		$("#MemberZip").parent().append('<input class="btn-search-address" type="button" value="住所検索" onclick="setAddress(0);">');
+		$("#MemberWorkZip").parent().append('<input class="btn-search-address" type="button" value="住所検索" onclick="setAddress(1);">');
 	});
 	
 	
-	function setAddress()
+	function setAddress(addr_type)
 	{
-		var zip = $('#MemberZip').val();
+		var id  = (addr_type==0) ? '#MemberZip' : '#MemberWorkZip';
+		
+		var zip = $(id).val();
 
 		if(zip=="")
 		{
@@ -77,7 +82,8 @@
 			},
 			success : function(resp)
 			{
-				if(resp.status == "OK") {
+				if(resp.status == "OK")
+				{
 					// APIのレスポンスから住所情報を取得
 					var obj = resp.results[0].address_components;
 					
@@ -88,8 +94,16 @@
 					}
 					
 					//$('#country').val(obj[4]['long_name']); // 国
-					$('#MemberPrefecture').val(obj[3]['long_name']); // 都道府県
-					$('#MemberAddress1').val(obj[2]['long_name'] + obj[1]['long_name']);	// 市区町村 + 番地
+					if(addr_type==0)
+					{
+						$('#MemberPrefecture').val(obj[3]['long_name']); // 都道府県
+						$('#MemberAddress1').val(obj[2]['long_name'] + obj[1]['long_name']);	// 市区町村 + 番地
+					}
+					else
+					{
+						$('#MemberWorkPrefecture').val(obj[3]['long_name']); // 都道府県
+						$('#MemberWorkAddress1').val(obj[2]['long_name'] + obj[1]['long_name']);	// 市区町村 + 番地
+					}
 				}
 				else
 				{
