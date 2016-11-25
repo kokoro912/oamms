@@ -28,8 +28,27 @@
 	}
 </style>
 <?php $this->end(); ?>
+<?php $this->start('script-embedded'); ?>
+<script>
+	$(function()
+	{
+	});
+	
+	function downloadCSV()
+	{
+		var url = '<?php echo Router::url(array('action' => 'csv')) ?>/' + $('#MembersEventEventId').val() + '/' + $('#MembersEventStatus').val() + '/' + $('#MembersEventUsername').val();
+		
+		location.href = url;
+	}
+
+</script>
+<?php $this->end(); ?>
+
 <div class="members_events index">
 	<div class="ib-page-title"><?php echo __('イベント申込状況'); ?></div>
+	<div class="buttons_container">
+		<button type="button" class="btn btn-default" onclick="downloadCSV()">CSV出力</button>
+	</div>
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('MembersEvent', array('action' => 'index'));

@@ -70,6 +70,8 @@ class MembersEventsController extends AppController
 	 */
 	public function admin_index()
 	{
+		//debug($this->request);
+		
 		// 検索条件設定
 		$this->Prg->commonProcess();
 
@@ -99,46 +101,64 @@ class MembersEventsController extends AppController
 		$events = $this->Event->find('list');
 		
 		$this->set(compact('events', 'members_events', 'event_id', 'status', 'username'));
-		
-		// 検索条件設定
-		/*
-		$this->Prg->commonProcess();
-		
-		$conditions = $this->MembersEvent->parseCriteria($this->Prg->parsedParams());
-		
-		$status			= (isset($this->request->query['status'])) ? $this->request->query['status'] : "";
-		$event_id		= (isset($this->request->query['event_id'])) ? $this->request->query['event_id'] : "";
-		$member_id		= (isset($this->request->query['member_id'])) ? $this->request->query['member_id'] : "";
-		$contenttitle	= (isset($this->request->query['contenttitle'])) ? $this->request->query['contenttitle'] : "";
-		
-		if($status != "")
-			$conditions['MembersEvent.status'] = $status;
-		
+	}
+
+
+	public function admin_csv($event_id = null, $status = null, $username = null)
+	{
 		if($event_id != "")
 			$conditions['Event.id'] = $event_id;
 		
-		if($member_id != "")
-			$conditions['Member.id'] = $member_id;
+		if($status != "")
+			$conditions['MembersEvent.status'] = $status;
+
+		if($username != "")
+			$conditions['Member.username'] = $username;
+
+		$this->autoRender = false;
+		//Configure::write('debug', 0);
+
+		//Content-Typeを指定
+		$this->response->type('csv');
+
+		//header("Content-Disposition: attachment; filename=selection.csv")
+		header('Content-Type: text/csv');
+		header('Content-Disposition: attachment; filename="selection.csv"');
 		
-		if($contenttitle != "")
-			$conditions['Content.title like'] = '%'.$contenttitle.'%';
+		$fp = fopen('php://output','w');
 		
-		$this->Paginator->settings['conditions'] = $conditions;
-		$this->Paginator->settings['order']      = 'MembersEvent.created desc';
-		$this->MembersEvent->recursive = 0;
+		//CSVをエクセルで開くことを想定して文字コードをSJISへ変換
+		//stream_filter_append($fp, 'convert.iconv.UTF-8/CP932', STREAM_FILTER_WRITE);
 		
-		//$groups = $this->Group->getGroupList();
-		$this->set('members_events',	$this->Paginator->paginate());
+		// イベント申込状況を取得
+		$options = array(
+			'conditions' => $conditions
+		);
 		
-//		$this->Group = new Group();
-		$this->Event = new Event();
+		$rows = $this->MembersEvent->find('all', $options);
 		
-//		$this->set('groups',			$this->Group->find('list'));
-		$this->set('events', 			$this->Event->find('list'));
-		$this->set('status',			$status);
-		$this->set('event_id',			$event_id);
-		$this->set('member_id',			$member_id);
-		$this->set('contenttitle',		$contenttitle);
-		*/
+		$header = array("イベント", "開催期間", "会員番号", "会員名", "メールアドレス", "申込日時", "ステータス");
+		
+		mb_convert_variables("SJIS", "UTF-8", $header);
+		fputcsv($fp, $header);
+		
+		foreach($rows as $row)
+		{
+			$row = array(
+				$row['Event']['title'], 
+				$row['Event']['started'].'～'.$row['Event']['started'], 
+				$row['Member']['username'], 
+				$row['Member']['name'], 
+				$row['Member']['email'], 
+				$row['MembersEvent']['created'], 
+				Configure::read('apply_status.'.$row['MembersEvent']['status']),
+			);
+			
+			mb_convert_variables("SJIS", "UTF-8", $row);
+			
+			fputcsv($fp, $row);
+		}
+		
+		fclose($fp);
 	}
 }
