@@ -30,6 +30,7 @@ class MembersController extends AppController
 							'index',
 							'login',
 							'add',
+							'init',
 							'thanks',
 							'mail'
 					)
@@ -285,7 +286,47 @@ class MembersController extends AppController
 
 		$this->set(compact('groups', 'nations', 'member'));
 	}
-
+	
+	public function init()
+	{
+		//$this->autoRender = FALSE;
+		//$this->layout = '';
+		
+		$members = $this->Member->find('all', array(
+			'conditions' => array(
+				'Member.password' => ''
+			)
+		));
+		
+		foreach ($members as $member)
+		{
+			$data = array();
+			/*
+			$data['Member'] = $member['Member'];
+			
+			unset($data['Member']['graduated']);
+			unset($data['Member']['created']);
+			unset($data['Member']['modified']);
+			unset($data['Member']['deleted']);
+			debug($data);
+			*/
+			$data['Member'] = array();
+			$data['Member']['id'] = $member['Member']['id'];
+			//$data['Member']['password'] = 'test';
+			
+			
+			$pwd = substr($member['Member']['tel_no'], -4);
+			
+			if($pwd)
+			{
+				debug($member['Member']['name']);
+				$data['Member']['password'] = substr($member['Member']['tel_no'], -4); 
+				debug($this->Member->save($data));
+			}
+			
+		}
+	}
+	
 	public function thanks()
 	{
 	}
