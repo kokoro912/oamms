@@ -52,8 +52,24 @@
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('MembersEvent', array('action' => 'index'));
-			echo $this->Form->input('event_id',		array('label' => 'イベント :', 'options'=>$events, 'selected'=>$event_id, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
-			echo $this->Form->input('status',		array('label' => 'ステータス :', 'options'=>Configure::read('apply_status'), 'selected'=>$status, 'empty' => '全て', 'required'=>false, 'class'=>'form-control'));
+			echo $this->Form->input('event_id',		array(
+				'label' => 'イベント :', 
+				'options'=>$events, 
+				'selected'=>$event_id, 
+				'empty' => '全て', 
+				'required'=>false, 
+				'onchange' => '$("#MembersEventIndexForm").submit();',
+				'class'=>'form-control'
+			));
+			echo $this->Form->input('status',		array(
+				'label' => 'ステータス :', 
+				'options'=>Configure::read('apply_status'), 
+				'selected'=>$status, 
+				'empty' => '全て', 
+				'required'=>false, 
+				'onchange' => '$("#MembersEventIndexForm").submit();',
+				'class'=>'form-control'
+			));
 			echo $this->Form->input('username',		array('label' => '会員番号 : '  , 'required' => false, 'value'=>$username));
 			echo $this->Form->submit(__('検索'),	array('class' => 'btn btn-info'));
 			echo $this->Form->end();
