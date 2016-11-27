@@ -104,8 +104,10 @@ class MembersEventsController extends AppController
 	}
 
 
-	public function admin_csv($event_id = null, $status = null, $username = null)
+	public function admin_csv($event_id = "", $status = "", $username = "")
 	{
+		$conditions = array();
+		
 		if($event_id != "")
 			$conditions['Event.id'] = $event_id;
 		
@@ -123,7 +125,7 @@ class MembersEventsController extends AppController
 
 		//header("Content-Disposition: attachment; filename=selection.csv")
 		header('Content-Type: text/csv');
-		header('Content-Disposition: attachment; filename="selection.csv"');
+		header('Content-Disposition: attachment; filename="members_event.csv"');
 		
 		$fp = fopen('php://output','w');
 		
@@ -137,7 +139,7 @@ class MembersEventsController extends AppController
 		
 		$rows = $this->MembersEvent->find('all', $options);
 		
-		$header = array("イベント", "開催期間", "会員番号", "会員名", "メールアドレス", "申込日時", "ステータス");
+		$header = array("イベント", "開催期間", "所属", "会員番号", "会員名", "メールアドレス", "申込日時", "ステータス");
 		
 		mb_convert_variables("SJIS", "UTF-8", $header);
 		fputcsv($fp, $header);
@@ -147,6 +149,8 @@ class MembersEventsController extends AppController
 			$row = array(
 				$row['Event']['title'], 
 				$row['Event']['started'].'～'.$row['Event']['started'], 
+				$row['Member']['work_name1'], 
+				$row['Member']['name'], 
 				$row['Member']['username'], 
 				$row['Member']['name'], 
 				$row['Member']['email'], 
