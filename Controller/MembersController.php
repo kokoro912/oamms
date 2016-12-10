@@ -359,6 +359,9 @@ class MembersController extends AppController
 
 		$conditions = array();
 
+		if($group_id != "")
+			$conditions['Member.id'] = $this->Group->getMemberIdByGroupID($group_id);
+		
 		if($member_kind != "")
 			$conditions['Member.member_kind'] = $member_kind;
 
@@ -376,7 +379,8 @@ class MembersController extends AppController
 		$members = $this->paginate();
 
 		$this->Group = new Group();
-		$this->set(compact('members', 'member_kind', 'group_id', 'status', 'username', 'name'));
+		$groups = $this->Group->find('list');
+		$this->set(compact('members', 'member_kind', 'groups', 'group_id', 'status', 'username', 'name'));
 	}
 
 	public function admin_welcome()

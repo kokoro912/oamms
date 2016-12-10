@@ -11,14 +11,14 @@
 	<div class="ib-horizontal">
 		<?php
 			echo $this->Form->create('Member',	array('action' => 'index'));
-			echo $this->Form->input('member_kind',	array(
-				'label' => '会員種別 : ', 
-				'options'=>Configure::read('member_kind'), 
-				'selected'=>$member_kind, 
+			echo $this->Form->input('group_id',		array(
+				'label' => 'グループ : ', 
+				'options'=>$groups, 
+				'selected'=>$group_id, 
 				'empty' => '全て', 
 				'required'=>false, 
 				'class' => 'form-control',
-				'onchange' => '$("#MemberIndexForm").submit();'
+				'onchange' => '$("#UserIndexForm").submit();'
 			));
 			echo $this->Form->input('status',	array(
 				'label' => 'ステータス : ', 
