@@ -90,13 +90,6 @@ class EventsController extends AppController
 		)))
 		{
 			debug($this->request->data);
-			/*
-			$data = array(
-				'event_id'    => $id,
-				'member_id'   => $this->Session->read('Auth.User.id'),
-				'status'      => 0,
-			);
-			*/
 			
 			$this->loadModel('MembersEvent');
 			
@@ -133,19 +126,6 @@ class EventsController extends AppController
 					'action' => 'index'
 				));
 			}
-
-			//debug($this->request->data);
-//			if ($this->Event->save($this->request->data))
-//			{
-//				$this->Flash->success(__('申込が完了しました'));
-//				return $this->redirect(array(
-//						'action' => 'index'
-//				));
-//			}
-//			else
-//			{
-//				$this->Flash->error(__('The event could not be saved. Please, try again.'));
-//			}
 		}
 		
 		
