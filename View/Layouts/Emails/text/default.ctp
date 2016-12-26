@@ -10,4 +10,10 @@
 ?>
 <?php echo $this->fetch('content'); ?>
 
-This email was sent using the CakePHP Framework, http://cakephp.org.
+-----------------------------------------------------
+日本水泳・水中運動学会
+〒351-8574 つくば市天王台1-1-1 筑波大学体育科学系
+http://www.swex.jp/
+office@swex.jp
+電話番号/FAX番号 : 029-853-6338
+-----------------------------------------------------

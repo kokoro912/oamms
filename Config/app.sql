@@ -217,3 +217,9 @@ CREATE TABLE `ib_users` (
   UNIQUE KEY `login_id` (`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=347 DEFAULT CHARSET=utf8;
 
+
+
+INSERT INTO `ib_settings` VALUES ('1', 'title', 'システム名', 'AIIT 学会');
+INSERT INTO `ib_settings` VALUES ('2', 'copyright', 'コピーライト', 'Copyright (C) 2016 AIIT Matsuo PBL All rights reserved.');
+INSERT INTO `ib_settings` VALUES ('3', 'color', 'テーマカラー', '#337ab7');
+INSERT INTO `ib_settings` VALUES ('4', 'information', 'お知らせ', '全体のお知らせを表示します。\r\nこのお知らせは管理機能の「システム設定」にて変更可能です。\r\n学習履歴は日付が変わると自動的にリセットされます。\r\n\r\nURLは以下のように自動的にリンクとなります。\r\nhttp://irohasoft.jp/\r\n');
